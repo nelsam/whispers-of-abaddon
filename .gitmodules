@@ -1,0 +1,6 @@
+[submodule "ant-build-script"]
+	path = ant-build-script
+	url = git@github.com:nelsam/ant-build-script.git
+[submodule "build-script"]
+	path = build-script
+	url = git@github.com:nelsam/whoa-build-script.git
