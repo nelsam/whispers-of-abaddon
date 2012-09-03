@@ -4,3 +4,6 @@
 [submodule "build-script"]
 	path = build-script
 	url = git@github.com:nelsam/whoa-build-script.git
+[submodule "lib/phpass"]
+	path = lib/phpass
+	url = https://github.com/exavolt/python-phpass.git
