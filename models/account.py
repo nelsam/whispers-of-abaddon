@@ -2,6 +2,8 @@ from google.appengine.ext import ndb
 
 from generic import individual
 
+# Note: AppEngine doesn't have any C-level bcrypt libraries, so we
+# can't use bcrypt.
 from lib.passlib.hash import pbkdf2_sha512 as authentication
 
 
