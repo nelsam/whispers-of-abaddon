@@ -1,0 +1,17 @@
+{% extends 'base_layout.jinja2' %}
+
+{% block main_content %}
+	<section class="about">
+		<article class="main">
+			<h1>About Whispers of Abaddon</h1>
+			{% for section in sections %}
+				<section>
+					<h2>{{section.title}}</h2>
+					{% for paragraph in section.description %}
+						<p>{{paragraph}}</p>
+					{% endfor %}
+				</section>
+			{% endfor %}
+		</article>
+	</section>
+{% endblock %}

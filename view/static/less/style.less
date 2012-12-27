@@ -1,0 +1,206 @@
+@import 'mixins.less';
+
+@site-width: 960px;
+@header-height: 100px;
+@footer-height: 50px;
+
+@theme-main-background-color: #333333;
+@theme-main-foreground-color: #cccccc;
+
+@theme-secondary-background-color: #453314;
+@theme-secondary-foreground-color: #ccccab;
+
+@theme-tierary-background-color: #550000;
+
+@font-face {
+		font-family: 'killer';
+		src: url('/static/fonts/Aggressive_Angry_Baby_Killer.ttf') format('truetype');
+}
+
+body {
+		background: @theme-main-background-color - #111111;
+		height: 100%;
+		margin: 0;
+
+		section.main.fixed-width {
+				background: @theme-main-background-color;
+				color: @theme-main-foreground-color;
+				width: @site-width;
+				height: 100%;
+				margin-left: auto;
+				margin-right: auto;
+				.box-shadow(0px 0px 30px black);
+
+				header {
+						height: @header-height;
+						#gradient .vertical-three-colors(@theme-tierary-background-color,
+																						 @theme-tierary-background-color + #111,
+																						 95%,
+																						 @theme-main-background-color - #111);
+
+						margin-bottom: 10px;
+
+						img.logo {
+								display: inline-block;
+						}
+
+						div.title {
+								float: right;
+								vertical-align: top;
+								overflow: hidden;
+								width: auto;
+								text-align: right;
+								margin-right: 50px;
+								margin-top: 30px;
+
+								h4 {
+										color: @theme-secondary-foreground-color;
+										font-size: 16px;
+										margin: 0;
+								}
+						}
+
+						ul.menu {
+								display: inline-block;
+								list-style-type: none;
+								vertical-align: bottom;
+								margin-bottom: 10px;
+								padding-left: 0;
+								overflow: auto;
+
+								a {
+										color: @theme-main-foreground-color;
+										text-decoration: none;
+								}
+
+								> li {
+										.border-radius(5px);
+										float: left;
+										margin-right: 8px;
+										padding: 3px;
+
+										> a {
+												font-size: 20px;
+												font-weight: bold;
+										}
+
+										ul {
+												background: url('/static/img/translucent-dark-pixel.png');
+												.border-radius(5px);
+												.border-top-left-radius(0);
+												list-style-type: none;
+												position: absolute;
+												z-index: 10;
+												overflow: hidden;
+												display: none;
+												padding: 0;
+												margin-left: -3px;
+												margin-top: 3px;
+
+												li {
+														min-width: 100px;
+														margin: 3px;
+														a {
+																margin-left: 10px;
+														}
+												}
+										}
+								}
+
+								> li:hover {
+										background: url('/static/img/translucent-dark-pixel.png');
+								}
+
+								> li.dropdown:hover {
+										.border-bottom-left-radius(0);
+										.border-bottom-right-radius(0);
+
+										ul {
+												display: block;
+										}
+								}
+						}
+				}
+
+				> article, > section {
+						padding: 10px;
+				}
+
+				article.home {
+						section.main {
+								h1 {
+										font-size: 62px;
+										color: @theme-secondary-foreground-color;
+										font-family: impact;
+										font-weight: normal;
+										margin: 0;
+										text-align: center;
+										position: relative;
+										z-index: 5;
+								}
+
+								img.logo {
+										display: block;
+										margin-left: auto;
+										margin-right: auto;
+										position: relative;
+										@image-overlap: -80px;
+										top: @image-overlap;
+										margin-bottom: @image-overlap;
+								}
+
+								.scratchings {
+										font-family: killer;
+										font-weight: normal;
+										margin: 0;
+										color: @theme-tierary-background-color + #111;
+								}
+
+								h4.scratchings {
+										text-align: center;
+										font-size: 52px;
+								}
+						}
+				}
+
+				section {
+						> article {
+								h2 {
+										color: @theme-secondary-foreground-color;
+										padding-top: 15px;
+										border-top: 1px solid @theme-tierary-background-color + #111;
+								}
+						}
+
+						article.warning {
+								margin: 15px;
+								padding: 5px;
+								background: #a37000;
+								border: 1px solid @theme-tierary-background-color;
+								.border-radius(5px);
+								color: @theme-main-background-color;
+
+								span {
+										color: #ddaa00;
+								}
+						}
+				}
+
+				section.about {
+						h1 {
+								font-size: 42px;
+								color: @theme-secondary-foreground-color;
+								margin: 0;
+								text-align: center;
+						}
+				}
+
+				footer {
+						height: @footer-height;
+						#gradient .vertical-three-colors(@theme-main-background-color - #222,
+																						 @theme-tierary-background-color + #111,
+																						 15%,
+																						 @theme-tierary-background-color);
+				}
+		}
+}

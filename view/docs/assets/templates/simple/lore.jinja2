@@ -1,0 +1,21 @@
+{% extends 'base_layout.jinja2' %}
+
+{% block main_content %}
+	<section class="lore">
+		<article class="warning">
+			<span>WARNING</span>: At this point
+			in time, the lore is all a big jumble of words on one page.  I aim to
+			have a much more interesting system in place for presenting this
+			to you, but it just isn't there yet.  So be ready for a lot of
+			scrolling through text if you want to read all of this.
+		</article>
+		{% for story in lore %}
+			<article class="story">
+				<h2>{{story.title}}</h2>
+				{% for paragraph in story.description %}
+					<p>{{paragraph}}</p>
+				{% endfor %}
+			</article>
+		{% endfor %}
+	</section>
+{% endblock %}

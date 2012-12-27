@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="ie ie6"><![endif]-->
+<!--[if IE 7 ]><html class="ie ie7"><![endif]-->
+<!--[if IE 8 ]><html class="ie ie8"><![endif]-->
+<!--[if IE 9 ]><html class="ie ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en"><!--<![endif]-->
+  <head>
+    <title>{% block title %}Whispers of Abaddon{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css"/>
+    
+  </head>
+  <body>
+    {% block body %}
+      <section class="main fixed-width">
+        <header class="main">
+          <img class="logo"
+							 width="100"
+							 height="100"
+               src="/static/img/logo.svg"/>
+          {% block navigation %}
+            <ul class="menu">
+              <li>
+                <a href="/">Home</a>
+              </li>
+							<li>
+								<a href="/about">About Us</a>
+							</li>
+							<li>
+								<a href="/lore">Lore</a>
+							</li>
+							<!--
+              <li class="dropdown">
+                <a href="/members">Members</a>
+                <ul class="submenu">
+                  {% for rank in member_ranks %}
+                    <li>
+                      <a href="/members/{{rank}}">{{rank.title()}}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </li>
+							-->
+            </ul>
+          {% endblock %}
+          <div class="title">
+            <h4>
+              Even the Whispers were blind to our operations
+            </h4>
+            <h4>
+              Now, not even they can stop us
+            </h4>
+          </div>
+        </header>
+        <section class="main">
+          {% block main_content %}
+          {% endblock %}
+        </section>
+				<footer>
+				</footer>
+      </section>
+    {% endblock %}
+  </body>
+</html>

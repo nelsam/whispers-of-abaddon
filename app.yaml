@@ -30,39 +30,14 @@ libraries:
   version: latest
 
 handlers:
-- url: /images
-  static_dir: static/images
 
-- url: /scripts
-  static_dir: static/scripts
-
-- url: /fonts
-  static_dir: static/fonts
-
-- url: /files
-  static_dir: static/files
-
-- url: /apple-touch-icon\.png
-  static_files: static/apple-touch-icon.png
-  upload: static/apple-touch-icon.png
-
-- url: /favicon\.ico
-  mime_type: image/png
-  static_files: static/favicon.ico
-  upload: static/favicon.ico
-
-- url: /(robots\.txt|humans\.txt|crossdomain\.xml)
-  static_files: static/\1
-  upload: static/(robots\.txt|humans\.txt|crossdomain\.xml)
+- url: /static
+  static_dir: frontend/static
 
 - url: /system/.*
   script: admin.application
   login: admin
   secure: always
-
-- url: /admin/docs
-  static_dir: docs/build/html
-  login: required
 
 - url: /admin/.*
   script: admin.application
@@ -70,9 +45,9 @@ handlers:
   secure: always
 
 - url: /(login|user|account).*
-  script: whoa.app
+  script: whoa.application
   secure: always
 
 - url: /.*
-  script: whoa.app
+  script: whoa.application
   secure: never

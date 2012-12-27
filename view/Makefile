@@ -1,7 +1,7 @@
-BOOTSTRAP = ./docs/assets/css/bootstrap.css
-BOOTSTRAP_LESS = ./less/bootstrap.less
-BOOTSTRAP_RESPONSIVE = ./docs/assets/css/bootstrap-responsive.css
-BOOTSTRAP_RESPONSIVE_LESS = ./less/responsive.less
+BOOTSTRAP = ./docs/assets/static/css/bootstrap.css
+BOOTSTRAP_LESS = ./static/less/bootstrap.less
+BOOTSTRAP_RESPONSIVE = ./docs/assets/static/css/bootstrap-responsive.css
+BOOTSTRAP_RESPONSIVE_LESS = ./static/less/responsive.less
 DATE=$(shell date +%I:%M%p)
 CHECK=\033[32m✔\033[39m
 HR=\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
@@ -15,22 +15,26 @@ build:
 	@echo "\n${HR}"
 	@echo "Building Bootstrap..."
 	@echo "${HR}\n"
-	@jshint js/*.js --config js/.jshintrc
-	@jshint js/tests/unit/*.js --config js/.jshintrc
+	@find static/js -iname '*.js' ! -name 'less.js' -exec jshint {} --config static/js/.jshintrc \;
+	@jshint static/js/tests/unit/*.js --config static/js/.jshintrc
 	@echo "Running JSHint on javascript...             ${CHECK} Done"
 	@recess --compile ${BOOTSTRAP_LESS} > ${BOOTSTRAP}
 	@recess --compile ${BOOTSTRAP_RESPONSIVE_LESS} > ${BOOTSTRAP_RESPONSIVE}
 	@echo "Compiling LESS with Recess...               ${CHECK} Done"
 	@node docs/build
-	@cp img/* docs/assets/img/
-	@cp js/*.js docs/assets/js/
-	@cp js/tests/vendor/jquery.js docs/assets/js/
+	@cp -r templates/* docs/assets/templates/
+	@find docs/assets/templates -iname '*.jinja2' -exec sed -i 's|<link.*href="/static/less/bootstrap.less".*>|<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css"/>|g' {} \;
+	@find docs/assets/templates -iname '*.jinja2' -exec sed -i 's|<script.*src="/static/js/less.js".*</script>||g' {} \;
+	@cp static/img/* docs/assets/static/img/
+	@cp static/fonts/* docs/assets/static/fonts/
+	@find static/js -iname '*.js' ! -name 'less.js' -exec cp {} docs/assets/static/js/ \;
+	@cp static/js/tests/vendor/jquery.js docs/assets/static/js/
 	@echo "Compiling documentation...                  ${CHECK} Done"
-	@cat js/bootstrap-transition.js js/bootstrap-alert.js js/bootstrap-button.js js/bootstrap-carousel.js js/bootstrap-collapse.js js/bootstrap-dropdown.js js/bootstrap-modal.js js/bootstrap-tooltip.js js/bootstrap-popover.js js/bootstrap-scrollspy.js js/bootstrap-tab.js js/bootstrap-typeahead.js js/bootstrap-affix.js > docs/assets/js/bootstrap.js
-	@uglifyjs docs/assets/js/bootstrap.js -nc > docs/assets/js/bootstrap.min.tmp.js
-	@echo "/**\n* Bootstrap.js v2.2.2 by @fat & @mdo\n* Copyright 2012 Twitter, Inc.\n* http://www.apache.org/licenses/LICENSE-2.0.txt\n*/" > docs/assets/js/copyright.js
-	@cat docs/assets/js/copyright.js docs/assets/js/bootstrap.min.tmp.js > docs/assets/js/bootstrap.min.js
-	@rm docs/assets/js/copyright.js docs/assets/js/bootstrap.min.tmp.js
+	@cat static/js/bootstrap-transition.js static/js/bootstrap-alert.js static/js/bootstrap-button.js static/js/bootstrap-carousel.js static/js/bootstrap-collapse.js static/js/bootstrap-dropdown.js static/js/bootstrap-modal.js static/js/bootstrap-tooltip.js static/js/bootstrap-popover.js static/js/bootstrap-scrollspy.js static/js/bootstrap-tab.js static/js/bootstrap-typeahead.js static/js/bootstrap-affix.js > docs/assets/static/js/bootstrap.js
+	@uglifyjs docs/assets/static/js/bootstrap.js -nc > docs/assets/static/js/bootstrap.min.tmp.js
+	@echo "/**\n* Bootstrap.js v2.2.2 by @fat & @mdo\n* Copyright 2012 Twitter, Inc.\n* http://www.apache.org/licenses/LICENSE-2.0.txt\n*/" > docs/assets/static/js/copyright.js
+	@cat docs/assets/static/js/copyright.js docs/assets/static/js/bootstrap.min.tmp.js > docs/assets/static/js/bootstrap.min.js
+	@rm docs/assets/static/js/copyright.js docs/assets/static/js/bootstrap.min.tmp.js
 	@echo "Compiling and minifying javascript...       ${CHECK} Done"
 	@echo "\n${HR}"
 	@echo "Bootstrap successfully built at ${DATE}."
@@ -43,12 +47,12 @@ build:
 #
 
 test:
-	jshint js/*.js --config js/.jshintrc
-	jshint js/tests/unit/*.js --config js/.jshintrc
-	node js/tests/server.js &
-	phantomjs js/tests/phantom.js "http://localhost:3000/js/tests"
-	kill -9 `cat js/tests/pid.txt`
-	rm js/tests/pid.txt
+	jshint static/js/*.js --config static/js/.jshintrc
+	jshint static/js/tests/unit/*.js --config static/js/.jshintrc
+	node static/js/tests/server.js &
+	phantomjs static/js/tests/phantom.js "http://localhost:3000/static/js/tests"
+	kill -9 `cat static/js/tests/pid.txt`
+	rm static/js/tests/pid.txt
 
 #
 # CLEANS THE ROOT DIRECTORY OF PRIOR BUILDS
@@ -71,11 +75,11 @@ bootstrap:
 	recess --compress ${BOOTSTRAP_LESS} > bootstrap/css/bootstrap.min.css
 	recess --compile ${BOOTSTRAP_RESPONSIVE_LESS} > bootstrap/css/bootstrap-responsive.css
 	recess --compress ${BOOTSTRAP_RESPONSIVE_LESS} > bootstrap/css/bootstrap-responsive.min.css
-	cat js/bootstrap-transition.js js/bootstrap-alert.js js/bootstrap-button.js js/bootstrap-carousel.js js/bootstrap-collapse.js js/bootstrap-dropdown.js js/bootstrap-modal.js js/bootstrap-tooltip.js js/bootstrap-popover.js js/bootstrap-scrollspy.js js/bootstrap-tab.js js/bootstrap-typeahead.js js/bootstrap-affix.js > bootstrap/js/bootstrap.js
-	uglifyjs bootstrap/js/bootstrap.js -nc > bootstrap/js/bootstrap.min.tmp.js
-	echo "/*!\n* Bootstrap.js by @fat & @mdo\n* Copyright 2012 Twitter, Inc.\n* http://www.apache.org/licenses/LICENSE-2.0.txt\n*/" > bootstrap/js/copyright.js
-	cat bootstrap/js/copyright.js bootstrap/js/bootstrap.min.tmp.js > bootstrap/js/bootstrap.min.js
-	rm bootstrap/js/copyright.js bootstrap/js/bootstrap.min.tmp.js
+	cat static/js/bootstrap-transition.js static/js/bootstrap-alert.js static/js/bootstrap-button.js static/js/bootstrap-carousel.js static/js/bootstrap-collapse.js static/js/bootstrap-dropdown.js static/js/bootstrap-modal.js static/js/bootstrap-tooltip.js static/js/bootstrap-popover.js static/js/bootstrap-scrollspy.js static/js/bootstrap-tab.js static/js/bootstrap-typeahead.js static/js/bootstrap-affix.js > bootstrap/static/js/bootstrap.js
+	uglifyjs bootstrap/static/js/bootstrap.js -nc > bootstrap/static/js/bootstrap.min.tmp.js
+	echo "/*!\n* Bootstrap.js by @fat & @mdo\n* Copyright 2012 Twitter, Inc.\n* http://www.apache.org/licenses/LICENSE-2.0.txt\n*/" > bootstrap/static/js/copyright.js
+	cat bootstrap/static/js/copyright.js bootstrap/static/js/bootstrap.min.tmp.js > bootstrap/static/js/bootstrap.min.js
+	rm bootstrap/static/js/copyright.js bootstrap/static/js/bootstrap.min.tmp.js
 
 #
 # MAKE FOR GH-PAGES 4 FAT & MDO ONLY (O_O  )

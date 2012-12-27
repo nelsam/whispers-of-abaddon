@@ -3,6 +3,8 @@
 # Cache current directory
 DIR=$( pwd )
 FRONTEND_DIR='view'
+BUILD_DIR="$FRONTEND_DIR"
+PUBLISH_DIR='view/docs/assets'
 
 python=$( which python2.7 )
 found=$?
@@ -31,16 +33,16 @@ all_matches=( a all A ALL All )
 
 function static_todev {
     echo "Setting dev environment"
-    failonerror "rm -f static"
-    failonerror "ln -s ${FRONTEND_DIR} static"
+    failonerror "rm -f frontend"
+    failonerror "ln -s ${FRONTEND_DIR} frontend"
 }
 
 function static_toprod {
     build
 
     echo "Setting prod environment"
-    failonerror "rm -f static"
-    failonerror "ln -s ${FRONTEND_DIR}/publish static"
+    failonerror "rm -f frontend"
+    failonerror "ln -s ${PUBLISH_DIR} frontend"
 
     upload="y"
     if [[ "$confirmation" != 'a' ]]
@@ -69,13 +71,14 @@ function dartc {
 
 function build {
     failonerror "find -name \"*.pyc\" -delete"
-    failonerror "ant"
+		failonerror "cd \"$BUILD_DIR\""
+    failonerror "make"
 
     echo "Converting references to .dart files to .dart.js"
-    failonerror "cd ${FRONTEND_DIR}/publish/templates"
-    failonerror "find -iname '*.html' -exec sed -i 's|application/dart|text/javascript|g' {} \;"
-    failonerror "find -iname '*.html' -exec sed -i 's|\.dart|.dart.js|g' {} \;"
-    failonerror "find -iname '*.html' -exec sed -i 's|^.*/js/dart\.js.*$||g' {} \;"
+    failonerror "cd \"${DIR}/${PUBLISH_DIR}/templates\""
+    failonerror "find -iname '*.jinja2' -exec sed -i 's|application/dart|text/javascript|g' {} \;"
+    failonerror "find -iname '*.jinja2' -exec sed -i 's|\.dart|.dart.js|g' {} \;"
+    failonerror "find -iname '*.jinja2' -exec sed -i 's|^.*/js/dart\.js.*$||g' {} \;"
 
     failonerror "cd \"$DIR\""
 }
