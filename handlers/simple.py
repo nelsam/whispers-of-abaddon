@@ -242,7 +242,7 @@ chance of winning over it?
 No, it was obvious that something else was going on.  Abaddon knew something,
 a fact so horrible that the massive slaughter resulting from unrestrained magic
 was a minor afterthought.  The fact that the other gods couldn't see that is
-disencouraging, to say the least.
+discouraging, to say the least.
 
 Our founders, members of the Order of Whispers, began studying Abaddon's life
 and death in depth.  At first, it was just an attempt to understand the fall of
