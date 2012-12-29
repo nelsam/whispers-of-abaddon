@@ -17,6 +17,21 @@
 		src: url('/static/fonts/Aggressive_Angry_Baby_Killer.ttf') format('truetype');
 }
 
+@font-face {
+		font-family: 'dark-garden';
+		src: url('/static/fonts/DarkGardenMK.ttf') format('truetype');
+}
+
+@font-face {
+		font-family: 'times-gothic';
+		src: url('/static/fonts/TimesGothic.ttf') format('truetype');
+}
+
+@font-face {
+		font-family: 'hog-runes';
+		src: url('/static/fonts/CurlyHogRunes-Medium.ttf') format('truetype');
+}
+
 body {
 		background: @theme-main-background-color - #111111;
 		height: 100%;
@@ -32,6 +47,7 @@ body {
 				.box-shadow(0px 0px 30px black);
 
 				header {
+						position: relative;
 						height: @header-height;
 						#gradient .vertical-three-colors(@theme-tierary-background-color,
 																						 @theme-tierary-background-color + #111,
@@ -45,17 +61,17 @@ body {
 						}
 
 						div.title {
-								float: right;
-								vertical-align: top;
+								position: absolute;
+								top: 10px;
+								right: 100px;
 								overflow: hidden;
 								width: auto;
 								text-align: right;
-								margin-right: 50px;
-								margin-top: 30px;
 
 								h4 {
 										color: @theme-secondary-foreground-color;
-										font-size: 16px;
+										font-family: dark-garden;
+										font-size: 14px;
 										margin: 0;
 								}
 						}
@@ -66,10 +82,12 @@ body {
 								vertical-align: bottom;
 								margin-bottom: 10px;
 								padding-left: 0;
-								overflow: auto;
+								overflow: hidden;
+								width: 40%;
 
 								a {
 										color: @theme-main-foreground-color;
+										font-family: times-gothic;
 										text-decoration: none;
 								}
 
@@ -129,11 +147,12 @@ body {
 				article.home {
 						section.main {
 								h1 {
-										font-size: 62px;
+										font-size: 102px;
 										color: @theme-secondary-foreground-color;
-										font-family: impact;
+										font-family: hog-runes;
 										font-weight: normal;
 										margin: 0;
+										margin-top: 20px;
 										text-align: center;
 										position: relative;
 										z-index: 5;
@@ -146,7 +165,7 @@ body {
 										position: relative;
 										@image-overlap: -80px;
 										top: @image-overlap;
-										margin-bottom: @image-overlap;
+										margin-bottom: @image-overlap * 2;
 								}
 
 								.scratchings {
@@ -157,6 +176,9 @@ body {
 								}
 
 								h4.scratchings {
+										position: relative;
+										z-index: 5;
+										margin-bottom: 5px;
 										text-align: center;
 										font-size: 52px;
 								}
