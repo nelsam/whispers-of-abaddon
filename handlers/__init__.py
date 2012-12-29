@@ -1,3 +1,4 @@
-__all__ = ['simple']
+__all__ = ['simple', 'admin']
 
 import simple
+import admin

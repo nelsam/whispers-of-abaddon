@@ -34,14 +34,9 @@ handlers:
 - url: /static
   static_dir: frontend/static
 
-- url: /system/.*
-  script: admin.application
+- url: /(admin|system)/.*
+  script: whoa.application
   login: admin
-  secure: always
-
-- url: /admin/.*
-  script: admin.application
-  login: required
   secure: always
 
 - url: /(login|user|account).*

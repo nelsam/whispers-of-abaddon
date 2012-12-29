@@ -1,0 +1,16 @@
+{% extends 'baselayout.jinja2' %}
+
+{% block maincontent %}
+  <h1>Lore Section List</h1>
+  <ol class="lore-list">
+    {% for entry in lore %}
+      <li>
+        {{entry.name}} |
+        <a href="/admin/lore/edit/{{entry.key.urlsafe()}}">Edit</a> |
+        <a href="/admin/lore/delete/{{entry.key.urlsafe()}}">Delete</a>
+      </li>
+    {% endfor %}
+  </ol>
+
+  <a class="button" href="/admin/lore/create">Create New Section</a>
+{% endblock %}

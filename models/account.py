@@ -1,13 +1,13 @@
 from google.appengine.ext import ndb
 
-from generic import individual
+from generic import Record
 
 # Note: AppEngine doesn't have any C-level bcrypt libraries, so we
 # can't use bcrypt.
-from lib.passlib.hash import pbkdf2_sha512 as authentication
+#from lib.passlib.hash import pbkdf2_sha512 as authentication
 
 
-class account(individual):
+class account(Record):
     login = ndb.StringProperty()
     email = ndb.StringProperty()
     passhash = ndb.StringProperty(indexed=False)

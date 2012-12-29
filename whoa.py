@@ -1,22 +1,23 @@
 import os
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
-import webapp2
+from webapp2 import Route, WSGIApplication
 from webapp2_extras import routes
 
 import settings
 import handlers
 
 mapping = [
-    webapp2.Route(r'/', handlers.simple.Home, name='home'),
-    webapp2.Route(r'/about', handlers.simple.About, name='about'),
-    webapp2.Route(r'/lore', handlers.simple.Lore, name='lore'),
-    #webapp2.Route(r'/static/<path:.*>', handlers.base.StaticHandler,
+    Route(r'/', handlers.simple.Home, name='home'),
+    Route(r'/about', handlers.simple.About, name='about'),
+    Route(r'/lore', handlers.simple.Lore, name='lore'),
+    #Route(r'/static/<path:.*>', handlers.base.StaticHandler,
     #              name='static'),
+    routes.PathPrefixRoute(r'/<:(admin|system)>', handlers.admin.routes),
     ]
 
 debug = not settings.is_production()
-application = webapp2.WSGIApplication(mapping, debug=debug)
+application = WSGIApplication(mapping, debug=debug)
 
 
 def main():

@@ -1,6 +1,6 @@
-{% extends 'base_layout.jinja2' %}
+{% extends 'baselayout.jinja2' %}
 
-{% block main_content %}
+{% block maincontent %}
 	<section class="lore">
 		<article class="warning">
 			<span>WARNING</span>: At this point
@@ -11,8 +11,8 @@
 		</article>
 		{% for story in lore %}
 			<article class="story">
-				<h2>{{story.title}}</h2>
-				{% for paragraph in story.description %}
+				<h2>{{story.name}}</h2>
+				{% for paragraph in story.paragraphs %}
 					<p>{{paragraph}}</p>
 				{% endfor %}
 			</article>
