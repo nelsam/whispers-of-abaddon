@@ -82,9 +82,8 @@ body {
 								}
 						}
 
-						ul.menu {
+						nav.main {
 								display: inline-block;
-								list-style-type: none;
 								vertical-align: bottom;
 								margin: 0;
 								margin-bottom: 10px;
@@ -92,64 +91,117 @@ body {
 								overflow: hidden;
 								width: 40%;
 
-								a {
-										color: @theme-main-foreground-color;
-										font-family: times-gothic;
-										text-decoration: none;
-								}
+                ul.menu {
+								    list-style-type: none;
+								    margin: 0;
+								    margin-bottom: 10px;
+								    padding-left: 0;
+								    overflow: hidden;
 
-								> li {
-										.border-radius(5px);
-										float: left;
-										margin-right: 8px;
-										padding: 3px;
+								    a {
+										    color: @theme-main-foreground-color;
+										    font-family: times-gothic;
+										    text-decoration: none;
+								    }
 
-										> a {
-												font-size: 20px;
-												font-weight: bold;
-										}
+								    > li {
+										    .border-radius(5px);
+										    float: left;
+										    margin-right: 8px;
+										    padding: 3px;
 
-										ul {
-												background: url('/static/img/translucent-dark-pixel.png');
-												.border-radius(5px);
-												.border-top-left-radius(0);
-												list-style-type: none;
-												position: absolute;
-												z-index: 10;
-												overflow: hidden;
-												display: none;
-												padding: 0;
-												margin-left: -3px;
-												margin-top: 3px;
+										    > a {
+												    font-size: 20px;
+												    font-weight: bold;
+										    }
 
-												li {
-														min-width: 100px;
-														margin: 3px;
-														a {
-																margin-left: 10px;
-														}
-												}
-										}
-								}
+										    ul {
+												    background: url('/static/img/translucent-dark-pixel.png');
+												    .border-radius(5px);
+												    .border-top-left-radius(0);
+												    list-style-type: none;
+												    position: absolute;
+												    z-index: 10;
+												    overflow: hidden;
+												    display: none;
+												    padding: 0;
+												    margin-left: -3px;
+												    margin-top: 3px;
 
-								> li:hover {
-										background: url('/static/img/translucent-dark-pixel.png');
-								}
+												    li {
+														    min-width: 100px;
+														    margin: 3px;
+														    a {
+																    margin-left: 10px;
+														    }
+												    }
+										    }
+								    }
 
-								> li.dropdown:hover {
-										.border-bottom-left-radius(0);
-										.border-bottom-right-radius(0);
+								    > li:hover {
+										    background: url('/static/img/translucent-dark-pixel.png');
+								    }
 
-										ul {
-												display: block;
-										}
-								}
+								    > li.dropdown:hover {
+										    .border-bottom-left-radius(0);
+										    .border-bottom-right-radius(0);
+
+										    ul {
+												    display: block;
+										    }
+								    }
+                }
 						}
+
+            nav.account {
+                position: absolute;
+                top: 71px;
+                right: 10px;
+                background: @theme-main-background-color;
+                padding: 3px;
+                padding-right: 7px;
+                padding-left: 7px;
+						    #gradient .vertical-three-colors(@theme-main-background-color - #111,
+																						     @theme-main-background-color,
+																						     30%,
+																						     @theme-main-background-color);
+                .border-top-right-radius(3px);
+                .border-top-left-radius(3px);
+                border: 1px solid #111;
+                border-bottom: none;
+                color: @theme-tierary-background-color + #333;
+						    text-shadow: 0.1em 0.1em black;
+
+                a {
+                    text-decoration: none;
+                    color: @theme-main-foreground-color;
+                    font-family: dark-garden;
+                    font-size: 10px;
+                }
+            }
 				}
 
 				> article, > section {
 						padding: 10px;
 				}
+
+        section.main {
+            a.button {
+                #gradient .vertical(@theme-tierary-background-color + #111,
+                                    @theme-tierary-background-color);
+                .border-radius(15px);
+                border: 2px solid @theme-tierary-background-color;
+                .box-shadow(inset 0px 0px 10px @theme-tierary-background-color + #222);
+                padding: 5px;
+                color: @theme-main-foreground-color;
+            }
+
+            a.button:hover {
+                #gradient .vertical(@theme-tierary-background-color,
+                                    @theme-tierary-background-color + #111);
+                text-decoration: none;
+            }
+        }
 
 				article.home {
 						section.main {
@@ -193,6 +245,47 @@ body {
 								}
 						}
 				}
+
+        table.account {
+            margin-left: 20px;
+            margin-right: 20px;
+
+            td, th {
+                padding-top: 7px;
+                padding-bottom: 7px;
+                border-bottom: 1px solid @theme-main-background-color;
+                background: @theme-main-background-color + #050505;
+                .border-radius(5px);
+            }
+
+            tr:last-child {
+                > td, > th {
+                    border-bottom: none;
+                }
+            }
+
+            th {
+                text-align: right;
+                vertical-align: top;
+                font-family: times-gothic;
+                font-size: 16px;
+                border-right: 1px solid @theme-main-background-color;
+                padding-right: 5px;
+            }
+
+            td {
+                font-family: hog-runes;
+                font-size: 24px;
+                padding-left: 10px;
+            }
+        }
+
+        section.account-details {
+            overflow: auto;
+            a.button {
+                float: right;
+            }
+        }
 
 				section {
 						> article {
