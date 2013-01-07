@@ -4,10 +4,10 @@
 	<section class="about">
 		<article class="main">
 			<h1>About Whispers of Abaddon</h1>
-			{% for section in sections %}
+			{% for section in records %}
 				<section>
-					<h2>{{section.title}}</h2>
-					{% for paragraph in section.description %}
+					<h2>{{section.name}}</h2>
+					{% for paragraph in section.paragraphs %}
 						<p>{{paragraph}}</p>
 					{% endfor %}
 				</section>

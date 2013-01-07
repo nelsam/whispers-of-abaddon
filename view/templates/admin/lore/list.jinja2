@@ -3,7 +3,7 @@
 {% block maincontent %}
   <h1>Lore Section List</h1>
   <ol class="lore-list">
-    {% for entry in lore %}
+    {% for entry in records %}
       <li>
         {{entry.name}} |
         <a href="/admin/lore/edit/{{entry.key.urlsafe()}}">Edit</a> |
