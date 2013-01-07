@@ -105,13 +105,32 @@ class TwoColumn(Base):
         return '\n'.join(stringparts)
 
 
-class OrderedRecord(Base):
+class Record(Base):
     """
-    This is intended to help with storing any OrderedRecord data type.
-    Remember that an OrderedRecord must use a "section" to tell it
+    This is intended to help with storing any Record data type.
+    Remember that an Record must use a "section" to tell it
     which part of the website it belongs in - this form does not
     do that part for you.  It just loads the user input data - namely,
     the title and body.
     """
     title = forms.CharField(label="Title: ")
     body = forms.CharField(label="Body: ", widget=forms.Textarea())
+
+
+class Rank(Record):
+    """
+    This form handles rank data for the guild.  It's mainly just
+    an ordered record, but in a separate collection so that we can
+    do more with it when the site calls for restricted areas.
+    """
+    placement = forms.IntegerField(label="Hierarchy Placement")
+
+
+class Account(Base):
+    """
+    The main account form.  Some aspects of the account will need
+    to be handled on separate pages, but this will handle the base
+    stuff.
+    """
+    name = forms.CharField(label="Display Name: ")
+    about = forms.CharField(label="About You: ", widget=forms.Textarea())

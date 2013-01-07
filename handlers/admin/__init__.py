@@ -7,7 +7,9 @@ __all__ = [
 ]
 
 import scribes
+import account
 
 routes = [
     routes.PathPrefixRoute(r'/<scribetype:(lore|about)>', scribes.routes),
+    routes.PathPrefixRoute(r'/account', account.routes),
 ]

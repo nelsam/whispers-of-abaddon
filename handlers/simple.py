@@ -21,9 +21,9 @@ class Scribes(BaseHandler):
 
     @property
     def query(self):
-        from models.scribes import OrderedRecord
-        query = OrderedRecord.query(OrderedRecord.section == self.scribetype)
-        records = query.order(OrderedRecord.rank)
+        from models.scribes import Record
+        query = Record.query(Record.section == self.scribetype)
+        records = query.order(Record.rank)
 
         return records
 

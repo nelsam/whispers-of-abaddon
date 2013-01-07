@@ -41,8 +41,10 @@ handlers:
 
 - url: /(login|user|account).*
   script: whoa.application
+  login: required
   secure: always
 
 - url: /.*
   script: whoa.application
+  login: optional
   secure: never

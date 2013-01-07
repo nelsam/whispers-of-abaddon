@@ -2,25 +2,32 @@ from google.appengine.ext import ndb
 
 from generic import Record
 
-# Note: AppEngine doesn't have any C-level bcrypt libraries, so we
-# can't use bcrypt.
-#from lib.passlib.hash import pbkdf2_sha512 as authentication
 
-
-class account(Record):
-    login = ndb.StringProperty()
-    email = ndb.StringProperty()
-    passhash = ndb.StringProperty(indexed=False)
+class Rank(Record, ndb.Model):
+    placement = ndb.IntegerProperty()
 
     @classmethod
-    def login(model, identifier, password):
-        user = model.query(model.login == identifier)
-        if not user:
-            user = model.query(model.email == identifier)
+    def hierarchy(cls):
+        return cls.query().order(cls.placement)
 
-        if user:
-            authed = authentication.verify(password, user.passhash)
-            if not authed:
-                user = None
+class User(Record, ndb.Model):
+    userid = ndb.StringProperty()
+    email = ndb.StringProperty(indexed=False)
+    characterkeys = ndb.KeyProperty(repeated=True)
+    rankkey = ndb.KeyProperty()
 
-        return user
+    @property
+    def characters(self):
+        return [charkey.get() for charkey in self.characterkeys]
+
+    @characters.setter
+    def characters(self, charlist):
+        self.characterkeys = [char.key for char in charlist]
+
+    @property
+    def rank(self):
+        return self.rankkey.get()
+
+    @rank.setter
+    def rank(self, rank):
+        self.rankkey = rank.key()

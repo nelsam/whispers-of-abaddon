@@ -1,40 +1,34 @@
-from google.appengine.ext import ndb
 from webapp2 import Route
+from webapp2_extras import routes
 
 from handlers.admin.base import AdminHandler
 
-from models.scribes import Record
+from models.account import Rank
 
 
-class Base(AdminHandler):
+class RankBase(AdminHandler):
+
+    templatedir = 'rank'
 
     def __init__(self, *args, **kwargs):
-        super(Base, self).__init__(*args, **kwargs)
-        self.scribetype = self.request.route_kwargs['scribetype']
-        from lib.forms import Record as OrderedRecordForm
-        self.form = OrderedRecordForm
-
-    @property
-    def templatedir(self):
-        return self.scribetype
+        super(RankBase, self).__init__(*args, **kwargs)
+        from lib.forms import Rank as RankForm
+        self.form = RankForm
 
 
-class List(Base):
+class RankList(RankBase):
 
     templatefile = 'list'
 
     def get(self, *args, **kwargs):
-        query = Record.query(Record.section == self.scribetype)
-        entries = query.order(Record.rank)
-
+        query = Rank.query().order(Rank.placement)
         context = {
-            'records': entries,
+            'ranks': query,
         }
-
         self.response.out.write(self.loadtemplate(context))
 
 
-class Create(Base):
+class RankCreate(RankBase):
 
     templatefile = 'create'
 
@@ -45,13 +39,13 @@ class Create(Base):
         form = self.form(self.request.params)
         form.validate = True
         if form.isvalid:
-            newentry = Record(
-                section=self.scribetype,
-                name=form.cleaneddata['title'])
+            newentry = Rank(
+                name=form.cleaneddata['title'],
+                placement=form.cleaneddata['placement'])
             newentry.description = form.cleaneddata['body']
             newentry.put()
 
-            self.redirect('/admin/%s/' % self.scribetype)
+            self.redirect('/admin/rank/')
         else:
             return self.render(form=form)
 
@@ -63,16 +57,19 @@ class Create(Base):
             'form': form,
         }
 
-        self.response.out.write(self.loadtemplate(context))
+        self.request.out.write(self.loadtemplate(context))
 
 
-class Edit(Create):
+class RankEdit(RankCreate):
+
+    templatefile = 'edit'
 
     def get(self, entrykey, *args, **kwargs):
-        entry = Record.get_by_key(entrykey)
+        entry = Rank.get_by_key(entrykey)
         formcontext = {
             'title': entry.name,
             'body': entry.description,
+            'placement': entry.placement,
         }
         form = self.form(formcontext)
         return self.render(form)
@@ -84,24 +81,27 @@ class Edit(Create):
             entry = Record.get_by_key(entrykey)
             entry.name = form.cleaneddata['title']
             entry.description = form.cleaneddata['body']
+            entry.placement = form.cleaneddata['placement']
             entry.put()
 
-            self.redirect('/admin/%s/' % self.scribetype)
+            self.redirect('/admin/rank/')
 
         return self.render(form)
 
 
-class Delete(Base):
+class RankDelete(RankBase):
 
     def get(self, entrykey, *args, **kwargs):
         key = ndb.Key(urlsafe=entrykey)
         key.delete()
-        self.redirect('/admin/%s/' % self.scribetype)
+        self.redirect('/admin/rank/')
 
 
 routes = [
-    Route(r'/', List, name='admin-scribes-list'),
-    Route(r'/create', Create, name="admin-lore-create"),
-    Route(r'/edit/<entrykey>', Edit, name="admin-lore-edit"),
-    Route(r'/delete/<entrykey>', Delete, name="admin-lore-delete"),
+    routes.PathPrefixRoute(r'/rank', [
+        Route(r'/', RankList, name='admin-rank-list'),
+        Route(r'/create', RankCreate, name='admin-rank-create'),
+        Route(r'/edit/<entrykey>', RankEdit, name='admin-rank-edit'),
+        Route(r'/delete/<entrykey>', RankDelete, name='admin-rank-delete'),
+        ]),
 ]

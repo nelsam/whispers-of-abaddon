@@ -11,6 +11,7 @@ mapping = [
     Route(r'/', handlers.simple.Home, name='home'),
     Route(r'/about', handlers.simple.About, name='about'),
     Route(r'/lore', handlers.simple.Lore, name='lore'),
+    routes.PathPrefixRoute(r'/account', handlers.account.routes),
     #Route(r'/static/<path:.*>', handlers.base.StaticHandler,
     #              name='static'),
     routes.PathPrefixRoute(r'/<:(admin|system)>', handlers.admin.routes),

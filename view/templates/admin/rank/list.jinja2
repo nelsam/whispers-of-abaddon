@@ -1,0 +1,16 @@
+{% extends 'baselayout.jinja2' %}
+
+{% block maincontent %}
+  <h1>Rank List</h1>
+  <ol class="lore-list">
+    {% for entry in records %}
+      <li>
+        {{entry.name}} |
+        <a href="/admin/rank/edit/{{entry.key.urlsafe()}}">Edit</a> |
+        <a href="/admin/rank/delete/{{entry.key.urlsafe()}}">Delete</a>
+      </li>
+    {% endfor %}
+  </ol>
+
+  <a class="button" href="/admin/rank/create">Create New Section</a>
+{% endblock %}

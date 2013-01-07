@@ -1,0 +1,23 @@
+{% extends 'baselayout.jinja2' %}
+
+{% block maincontent %}
+  <section class="account-details">
+    <table class="account">
+      <tr>
+        <th>Display Name</th>
+        <td>{{user.name or ""}}</td>
+      </tr>
+      <tr>
+        <th>About You</th>
+        <td>
+          {% for paragraph in user.paragraphs %}
+            <p>
+              {{paragraph}}
+            </p>
+          {% endfor %}
+        </td>
+      </tr>
+    </table>
+    <a class="button" href="/account/edit">Edit Details</a>
+  </section>
+{% endblock %}

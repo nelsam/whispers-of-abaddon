@@ -20,29 +20,42 @@
 								 src="/static/img/logo.svg"/>
 					</a>
           {% block navigation %}
-            <ul class="menu">
-              <li>
-                <a href="/">Home</a>
-              </li>
-							<li>
-								<a href="/about">About Us</a>
-							</li>
-							<li>
-								<a href="/lore">Lore</a>
-							</li>
-							<!--
-              <li class="dropdown">
-                <a href="/members">Members</a>
-                <ul class="submenu">
-                  {% for rank in member_ranks %}
-                    <li>
-                      <a href="/members/{{rank}}">{{rank.title()}}</a>
+            <nav class="main">
+              <ul class="menu">
+                <li>
+                  <a href="/">Home</a>
+                </li>
+							  <li>
+								  <a href="/about">About Us</a>
+							  </li>
+							  <li>
+								  <a href="/lore">Lore</a>
+							  </li>
+							  <!--
+                    <li class="dropdown">
+                      <a href="/members">Members</a>
+                      <ul class="submenu">
+                        {% for rank in member_ranks %}
+                          <li>
+                            <a href="/members/{{rank}}">{{rank.title()}}</a>
+                          </li>
+                        {% endfor %}
+                      </ul>
                     </li>
-                  {% endfor %}
-                </ul>
-              </li>
-							-->
-            </ul>
+							      -->
+              </ul>
+            </nav>
+            <nav class="account">
+              {% if user %}
+                <a href="/account/">
+                  {{user.name or 'Account Preferences'}}
+                </a> / <a href="{{logouturl}}">
+                  Log Out
+                </a>
+              {% else %}
+                <a href="{{loginurl}}">Log In</a>
+              {% endif %}
+            </nav>
           {% endblock %}
           <div class="title">
             <h4>

@@ -14,3 +14,8 @@ indexes:
   properties:
   - name: section
   - name: rank
+
+- kind: Record
+  properties:
+  - name: section
+  - name: rank
