@@ -10,7 +10,7 @@
 @theme-secondary-background-color: #453314;
 @theme-secondary-foreground-color: #ccccab;
 
-@theme-tierary-background-color: #550000;
+@theme-tertiary-background-color: #550000;
 
 @font-face {
   font-family: 'killer';
@@ -53,8 +53,8 @@ body {
     header {
       position: relative;
       height: @header-height;
-      #gradient .vertical-three-colors(@theme-tierary-background-color,
-                                       @theme-tierary-background-color + #111,
+      #gradient .vertical-three-colors(@theme-tertiary-background-color,
+                                       @theme-tertiary-background-color + #111,
                                        95%,
                                        @theme-main-background-color - #111);
 
@@ -169,7 +169,7 @@ body {
         .border-top-left-radius(3px);
         border: 1px solid #111;
         border-bottom: none;
-        color: @theme-tierary-background-color + #333;
+        color: @theme-tertiary-background-color + #333;
         text-shadow: 0.1em 0.1em black;
 
         a {
@@ -187,18 +187,18 @@ body {
 
     section.main {
       a.button {
-        #gradient .vertical(@theme-tierary-background-color + #111,
-                            @theme-tierary-background-color);
+        #gradient .vertical(@theme-tertiary-background-color + #111,
+                            @theme-tertiary-background-color);
         .border-radius(15px);
-        border: 2px solid @theme-tierary-background-color;
-        .box-shadow(inset 0px 0px 10px @theme-tierary-background-color + #222);
+        border: 2px solid @theme-tertiary-background-color;
+        .box-shadow(inset 0px 0px 10px @theme-tertiary-background-color + #222);
         padding: 5px;
         color: @theme-main-foreground-color;
       }
 
       a.button:hover {
-        #gradient .vertical(@theme-tierary-background-color,
-                            @theme-tierary-background-color + #111);
+        #gradient .vertical(@theme-tertiary-background-color,
+                            @theme-tertiary-background-color + #111);
         text-decoration: none;
       }
     }
@@ -210,7 +210,7 @@ body {
           color: @theme-secondary-foreground-color;
           font-family: hog-runes;
           font-weight: normal;
-          text-shadow: 0.03em 0.03em @theme-tierary-background-color + #100;
+          text-shadow: 0.03em 0.03em @theme-tertiary-background-color + #100;
           margin: 0;
           margin-top: 20px;
           text-align: center;
@@ -233,7 +233,7 @@ body {
           font-weight: normal;
           text-shadow: 0.03em 0.03em black;
           margin: 0;
-          color: @theme-tierary-background-color + #111;
+          color: @theme-tertiary-background-color + #111;
         }
 
         h4.scratchings {
@@ -292,7 +292,7 @@ body {
         h2 {
           color: @theme-secondary-foreground-color;
           padding-top: 15px;
-          border-top: 1px solid @theme-tierary-background-color + #111;
+          border-top: 1px solid @theme-tertiary-background-color + #111;
         }
       }
 
@@ -300,7 +300,7 @@ body {
         margin: 15px;
         padding: 5px;
         background: #a37000;
-        border: 1px solid @theme-tierary-background-color;
+        border: 1px solid @theme-tertiary-background-color;
         .border-radius(5px);
         color: @theme-main-background-color;
 
@@ -332,9 +332,9 @@ body {
     footer {
       height: @footer-height;
       #gradient .vertical-three-colors(@theme-main-background-color - #222,
-                                       @theme-tierary-background-color + #111,
+                                       @theme-tertiary-background-color + #111,
                                        15%,
-                                       @theme-tierary-background-color);
+                                       @theme-tertiary-background-color);
     }
   }
 }
