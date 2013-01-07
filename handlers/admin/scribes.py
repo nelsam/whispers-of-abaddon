@@ -3,7 +3,7 @@ from webapp2 import Route
 
 from handlers.admin.base import AdminHandler
 
-from models.scribes import Record
+from models.scribes import OrderedRecord as Record
 
 
 class Base(AdminHandler):
@@ -24,6 +24,8 @@ class List(Base):
     templatefile = 'list'
 
     def get(self, *args, **kwargs):
+        import logging
+        logging.info("Loading scribes of type %s" % self.scribetype)
         query = Record.query(Record.section == self.scribetype)
         entries = query.order(Record.rank)
 
