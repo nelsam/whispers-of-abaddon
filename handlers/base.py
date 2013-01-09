@@ -61,13 +61,14 @@ class BaseHandler(webapp2.RequestHandler):
                                   context=context)
 
     def _loadtemplate(self, templatepath, context={}):
-        context['user'] = self.getuser()
-        if context['user']:
+        context['user'] = self.user
+        if self.user:
             context['logouturl'] = users.create_logout_url(self.request.path)
+            context['admin'] = (users.is_current_user_admin() or
+                                self.user.siteadmin)
         else:
             context['loginurl'] = users.create_login_url(self.request.path)
-
-        context['member_ranks'] = ['leaders', 'officers', 'members']
+            context['admin'] = False
 
         templatepath = '%s.jinja2' % templatepath
         template = self.environment.get_template(templatepath)

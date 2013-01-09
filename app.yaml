@@ -36,7 +36,7 @@ handlers:
 
 - url: /(admin|system)/.*
   script: whoa.application
-  login: admin
+  login: required
   secure: always
 
 - url: /(login|user|account).*

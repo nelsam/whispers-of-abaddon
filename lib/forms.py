@@ -134,3 +134,10 @@ class Account(Base):
     """
     name = forms.CharField(label="Display Name: ")
     about = forms.CharField(label="About You: ", widget=forms.Textarea())
+
+
+class AdminAccount(Account):
+    """
+    Same as an account, but allows admins to set a few other things.
+    """
+    isadmin = forms.BooleanField(label="Site Admin", required=False)

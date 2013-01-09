@@ -4,7 +4,7 @@ from google.appengine.ext import ndb
 class Base(object):
 
     @classmethod
-    def get_by_key(class_, urlsafe):
+    def getbykey(class_, urlsafe):
         key = ndb.Key(urlsafe=urlsafe)
         return key.get()
 

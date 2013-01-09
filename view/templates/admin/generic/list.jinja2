@@ -1,16 +1,22 @@
 {% extends 'baselayout.jinja2' %}
 
 {% block maincontent %}
-  <h1>About Section List</h1>
+  <h1>{{title}} List</h1>
   <ol class="lore-list">
-    {% for entry in records %}
+    {% for item in records %}
       <li>
-        {{entry.name}} |
-        <a href="/admin/about/edit/{{entry.key.urlsafe()}}">Edit</a> |
-        <a href="/admin/about/delete/{{entry.key.urlsafe()}}">Delete</a>
+        {{item.name}}
+        {% if edit %}
+          | <a href="/{{basepath}}/edit/{{item.key.urlsafe()}}">Edit</a>
+        {% endif %}
+        {% if delete %}
+          | <a href="/{{basepath}}/delete/{{item.key.urlsafe()}}">Delete</a>
+        {% endif %}
       </li>
     {% endfor %}
   </ol>
 
-  <a class="button" href="/admin/about/create">Create New Section</a>
+  {% if create %}
+    <a class="button" href="/{{basepath}}/create">New {{title}}</a>
+  {% endif %}
 {% endblock %}

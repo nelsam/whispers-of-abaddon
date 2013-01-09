@@ -15,6 +15,7 @@ class User(Record, ndb.Model):
     email = ndb.StringProperty(indexed=False)
     characterkeys = ndb.KeyProperty(repeated=True)
     rankkey = ndb.KeyProperty()
+    siteadmin = ndb.BooleanProperty()
 
     @property
     def characters(self):

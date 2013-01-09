@@ -1,96 +1,62 @@
 from google.appengine.ext import ndb
 from webapp2 import Route
 
-from handlers.admin.base import AdminHandler
+from handlers.admin import base
 
 from models.scribes import OrderedRecord as Record
 
 
-class Base(AdminHandler):
+class Base(base.AdminHandler):
 
     def __init__(self, *args, **kwargs):
         super(Base, self).__init__(*args, **kwargs)
         self.scribetype = self.request.route_kwargs['scribetype']
+
         from lib.forms import Record as OrderedRecordForm
         self.form = OrderedRecordForm
+
+        from models.scribes import OrderedRecord as OrderedRecordModel
+        self.model = OrderedRecordModel
 
     @property
     def templatedir(self):
         return self.scribetype
 
 
-class List(Base):
+class List(Base, base.List):
 
-    templatefile = 'list'
+    @property
+    def query(self):
+        return self.model.query(Record.section == self.scribetype)
 
-    def get(self, *args, **kwargs):
-        import logging
-        logging.info("Loading scribes of type %s" % self.scribetype)
-        query = Record.query(Record.section == self.scribetype)
-        entries = query.order(Record.rank)
-
-        context = {
-            'records': entries,
-        }
-
-        self.response.out.write(self.loadtemplate(context))
+    @property
+    def title(self):
+        return '%s Section' % self.scribetype.title()
 
 
-class Create(Base):
+class Create(Base, base.Create):
 
-    templatefile = 'create'
-
-    def get(self, *args, **kwargs):
-        return self.render()
-
-    def post(self, *args, **kwargs):
-        form = self.form(self.request.params)
-        form.validate = True
-        if form.isvalid:
-            newentry = Record(
-                section=self.scribetype,
-                name=form.cleaneddata['title'])
-            newentry.description = form.cleaneddata['body']
-            newentry.put()
-
-            self.redirect('/admin/%s/' % self.scribetype)
-        else:
-            return self.render(form=form)
-
-    def render(self, form=None):
-        if form is None:
-            form = self.form()
-
-        context = {
-            'form': form,
-        }
-
-        self.response.out.write(self.loadtemplate(context))
+    def createitem(self, form):
+        newentry = Record(
+            section=self.scribetype,
+            name=form.cleaneddata['title'])
+        newentry.description = form.cleaneddata['body']
+        return newentry
 
 
-class Edit(Create):
+class Edit(Base, base.Edit):
 
-    def get(self, entrykey, *args, **kwargs):
-        entry = Record.get_by_key(entrykey)
+    def formcontext(self, item):
         formcontext = {
-            'title': entry.name,
-            'body': entry.description,
+            'title': item.name,
+            'body': item.description,
         }
-        form = self.form(formcontext)
-        return self.render(form)
+        return formcontext
 
-    def post(self, entrykey, *args, **kwargs):
-        form = self.form(self.request.params)
-        form.validate = True
-        if form.isvalid:
-            entry = Record.get_by_key(entrykey)
-            entry.name = form.cleaneddata['title']
-            entry.description = form.cleaneddata['body']
-            entry.put()
-
-            self.redirect('/admin/%s/' % self.scribetype)
-
-        return self.render(form)
+    def updateitem(self, item, form):
+        item.name = form.cleaneddata['title']
+        item.description = form.cleaneddata['body']
+        return item
 
 
 class Delete(Base):
@@ -104,6 +70,6 @@ class Delete(Base):
 routes = [
     Route(r'/', List, name='admin-scribes-list'),
     Route(r'/create', Create, name="admin-lore-create"),
-    Route(r'/edit/<entrykey>', Edit, name="admin-lore-edit"),
-    Route(r'/delete/<entrykey>', Delete, name="admin-lore-delete"),
+    Route(r'/edit/<itemkey>', Edit, name="admin-lore-edit"),
+    Route(r'/delete/<itemkey>', Delete, name="admin-lore-delete"),
 ]

@@ -1,12 +1,10 @@
 from webapp2 import Route
 from webapp2_extras import routes
 
-from handlers.admin.base import AdminHandler
-
-from models.account import Rank
+from handlers.admin import base
 
 
-class RankBase(AdminHandler):
+class RankBase(base.AdminHandler):
 
     templatedir = 'rank'
 
@@ -15,93 +13,94 @@ class RankBase(AdminHandler):
         from lib.forms import Rank as RankForm
         self.form = RankForm
 
-
-class RankList(RankBase):
-
-    templatefile = 'list'
-
-    def get(self, *args, **kwargs):
-        query = Rank.query().order(Rank.placement)
-        context = {
-            'ranks': query,
-        }
-        self.response.out.write(self.loadtemplate(context))
+        from models.account import Rank as RankModel
+        self.model = RankModel
 
 
-class RankCreate(RankBase):
-
-    templatefile = 'create'
-
-    def get(self, *args, **kwargs):
-        return self.render()
-
-    def post(self, *args, **kwargs):
-        form = self.form(self.request.params)
-        form.validate = True
-        if form.isvalid:
-            newentry = Rank(
-                name=form.cleaneddata['title'],
-                placement=form.cleaneddata['placement'])
-            newentry.description = form.cleaneddata['body']
-            newentry.put()
-
-            self.redirect('/admin/rank/')
-        else:
-            return self.render(form=form)
-
-    def render(self, form=None):
-        if form is None:
-            form = self.form()
-
-        context = {
-            'form': form,
-        }
-
-        self.request.out.write(self.loadtemplate(context))
+class RankList(RankBase, base.List):
+    title = 'Rank'
 
 
-class RankEdit(RankCreate):
+class RankCreate(RankBase, base.Create):
 
-    templatefile = 'edit'
+    def createitem(self, form):
+        newentry = self.model(
+            name=form.cleaneddata['title'],
+            placement=form.cleaneddata['placement'])
+        newentry.description = form.cleaneddata['body']
+        return newentry    
 
-    def get(self, entrykey, *args, **kwargs):
-        entry = Rank.get_by_key(entrykey)
+
+class RankEdit(RankBase, base.Edit):
+
+    def formcontext(self, item):
         formcontext = {
-            'title': entry.name,
-            'body': entry.description,
-            'placement': entry.placement,
+            'title': item.name,
+            'body': item.description,
+            'placement': item.placement,
         }
-        form = self.form(formcontext)
-        return self.render(form)
+        return formcontext
 
-    def post(self, entrykey, *args, **kwargs):
-        form = self.form(self.request.params)
-        form.validate = True
-        if form.isvalid:
-            entry = Record.get_by_key(entrykey)
-            entry.name = form.cleaneddata['title']
-            entry.description = form.cleaneddata['body']
-            entry.placement = form.cleaneddata['placement']
-            entry.put()
-
-            self.redirect('/admin/rank/')
-
-        return self.render(form)
+    def updateitem(self, item, form):
+        item.name = form.cleaneddata['title']
+        item.description = form.cleaneddata['body']
+        item.placement = form.cleaneddata['placement']
+        return item
 
 
-class RankDelete(RankBase):
+class RankDelete(RankBase, base.Delete):
+    pass
 
-    def get(self, entrykey, *args, **kwargs):
-        key = ndb.Key(urlsafe=entrykey)
-        key.delete()
-        self.redirect('/admin/rank/')
+
+class UserBase(base.AdminHandler):
+
+    templatedir = 'user'
+
+    def __init__(self, *args, **kwargs):
+        super(UserBase, self).__init__(*args, **kwargs)
+        from lib.forms import AdminAccount as UserForm
+        self.form = UserForm
+
+        from models.account import User as UserModel
+        self.model = UserModel
+
+
+class UserList(UserBase, base.List):
+    title = 'User'
+    create = False
+
+
+class UserEdit(UserBase, base.Edit):
+
+    def formcontext(self, item):
+        formcontext = {
+            'name': item.name,
+            'about': item.description,
+            'isadmin': item.siteadmin,
+        }
+        return formcontext
+
+    def updateitem(self, item, form):
+        item.name = form.cleaneddata['name']
+        item.description = form.cleaneddata['about']
+        item.siteadmin = form.cleaneddata['isadmin']
+        return item
+
+
+class UserDelete(UserBase, base.Delete):
+    pass
 
 
 routes = [
-    routes.PathPrefixRoute(r'/rank', [
+    routes.PathPrefixRoute(r'/ranks', [
         Route(r'/', RankList, name='admin-rank-list'),
         Route(r'/create', RankCreate, name='admin-rank-create'),
-        Route(r'/edit/<entrykey>', RankEdit, name='admin-rank-edit'),
-        Route(r'/delete/<entrykey>', RankDelete, name='admin-rank-delete'),
-        ]),
+        Route(r'/edit/<itemkey>', RankEdit, name='admin-rank-edit'),
+        Route(r'/delete/<itemkey>', RankDelete, name='admin-rank-delete'),
+    ]),
+    routes.PathPrefixRoute(r'/users', [
+        Route(r'/', UserList, name='admin-user-list'),
+        Route(r'/edit/<itemkey>', UserEdit, name='admin-user-edit'),
+        Route(r'/delete/<itemkey>', UserDelete, name='admin-user-delete'),
+    ]),
 ]

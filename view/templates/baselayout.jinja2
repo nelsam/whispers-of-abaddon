@@ -31,18 +31,6 @@
 							  <li>
 								  <a href="/lore">Lore</a>
 							  </li>
-							  <!--
-                    <li class="dropdown">
-                      <a href="/members">Members</a>
-                      <ul class="submenu">
-                        {% for rank in member_ranks %}
-                          <li>
-                            <a href="/members/{{rank}}">{{rank.title()}}</a>
-                          </li>
-                        {% endfor %}
-                      </ul>
-                    </li>
-							      -->
               </ul>
             </nav>
             <nav class="account">
@@ -67,6 +55,17 @@
           </div>
         </header>
         <section class="main">
+          {% if admin %}
+            <nav class="admin">
+              <h4>Administration</h4>
+              <ul>
+                <li><a href="/admin/about/">About</a></li>
+                <li><a href="/admin/lore/">Lore</a></li>
+                <li><a href="/admin/account/ranks/">Ranks</a></li>
+                <li><a href="/admin/account/users/">Users</a></li>
+              </ul>
+            </nav>
+          {% endif %}
           {% block maincontent %}
           {% endblock %}
         </section>

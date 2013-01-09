@@ -50,6 +50,8 @@ body {
     margin-right: auto;
     .box-shadow(0px 0px 30px black);
 
+    @content-padding: 10px;
+
     header {
       position: relative;
       height: @header-height;
@@ -182,10 +184,60 @@ body {
     }
 
     > article, > section {
-      padding: 10px;
+      padding: @content-padding;
     }
 
     section.main {
+
+      nav.admin {
+        @admin-width: 750px;
+
+        background: black;
+        .border-bottom-left-radius(10px);
+        .border-bottom-right-radius(10px);
+        position: relative;
+        width: @admin-width;
+        top: -20px;
+        padding: 3px;
+        #gradient .vertical(@theme-main-background-color - #111, black);
+
+        h4 {
+          font-family: killer;
+          font-weight: normal;
+          margin: 0;
+          margin-right: 15px;
+          float: left;
+        }
+
+        ul {
+          list-style-type: none;
+          overflow: auto;
+          margin-bottom: 2px;
+
+          li {
+            float: left;
+            margin-left: 10px;
+
+            a {
+              color: @theme-secondary-foreground-color;
+              text-decoration: none;
+              padding: 2px;
+            }
+
+            a:hover {
+              color: @theme-secondary-background-color;
+              background: @theme-secondary-foreground-color;
+              .border-radius(3px);
+              .box-shadow(inset 0px 0px 15px black);
+            }
+          }
+
+          li:first-child {
+            margin-left: 0px;
+          }
+        }
+      }
+
       a.button {
         #gradient .vertical(@theme-tertiary-background-color + #111,
                             @theme-tertiary-background-color);
@@ -249,6 +301,7 @@ body {
     table.account {
       margin-left: 20px;
       margin-right: 20px;
+      margin-bottom: 15px;
 
       td, th {
         padding-top: 7px;
@@ -266,6 +319,7 @@ body {
 
       th {
         text-align: right;
+        width: 120px;
         vertical-align: top;
         font-family: times-gothic;
         font-size: 16px;
@@ -274,8 +328,9 @@ body {
       }
 
       td {
-        font-family: hog-runes;
-        font-size: 24px;
+        width: 780px;
+        font-family: times-gothic;
+        font-size: 14px;
         padding-left: 10px;
       }
     }
