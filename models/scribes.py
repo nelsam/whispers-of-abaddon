@@ -3,5 +3,6 @@ from generic import Record
 
 
 class OrderedRecord(Record, ndb.Model):
-    section = ndb.StringProperty()
-    rank = ndb.IntegerProperty()
+    section = ndb.StringProperty(required=True)
+    rank = ndb.IntegerProperty(default=0)
+

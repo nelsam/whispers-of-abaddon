@@ -3,14 +3,14 @@
 {% block maincontent %}
   <h1>Rank List</h1>
   <ol class="lore-list">
-    {% for entry in records %}
+    {% for rank in ranks %}
       <li>
-        {{entry.name}} |
-        <a href="/admin/rank/edit/{{entry.key.urlsafe()}}">Edit</a> |
-        <a href="/admin/rank/delete/{{entry.key.urlsafe()}}">Delete</a>
+        {{rank.name}} |
+        <a href="/admin/account/ranks/edit/{{rank.key.urlsafe()}}">Edit</a> |
+        <a href="/admin/account/ranks/delete/{{rank.key.urlsafe()}}">Delete</a>
       </li>
     {% endfor %}
   </ol>
 
-  <a class="button" href="/admin/rank/create">Create New Section</a>
+  <a class="button" href="/admin/account/ranks/create">Create New Rank</a>
 {% endblock %}

@@ -7036,10 +7036,29 @@ a.badge:hover {
   src: url('/static/fonts/Aggressive_Angry_Baby_Killer.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: 'dark-garden';
+  src: url('/static/fonts/DarkGardenMK.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'times-gothic';
+  src: url('/static/fonts/TimesGothic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'hog-runes';
+  src: url('/static/fonts/CurlyHogRunes-Medium.ttf') format('truetype');
+}
+
 body {
   height: 100%;
   margin: 0;
   background: #222222;
+}
+
+body a.image-link {
+  display: inline-block;
 }
 
 body section.main.fixed-width {
@@ -7055,8 +7074,10 @@ body section.main.fixed-width {
 }
 
 body section.main.fixed-width header {
+  position: relative;
   height: 100px;
   margin-bottom: 10px;
+  text-shadow: 0.2em 0.2em black;
   background-color: #581414;
   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#550000), color-stop(95%, #661111), to(#222222));
   background-image: -webkit-linear-gradient(#550000, #661111 95%, #222222);
@@ -7072,36 +7093,46 @@ body section.main.fixed-width header img.logo {
 }
 
 body section.main.fixed-width header div.title {
-  float: right;
+  position: absolute;
+  top: 10px;
+  right: 100px;
   width: auto;
-  margin-top: 30px;
-  margin-right: 50px;
   overflow: hidden;
   text-align: right;
-  vertical-align: top;
 }
 
 body section.main.fixed-width header div.title h4 {
   margin: 0;
-  font-size: 16px;
+  font-family: dark-garden;
+  font-size: 14px;
   color: #ccccab;
 }
 
-body section.main.fixed-width header ul.menu {
+body section.main.fixed-width header nav.main {
   display: inline-block;
+  width: 40%;
   padding-left: 0;
+  margin: 0;
   margin-bottom: 10px;
-  overflow: auto;
+  overflow: hidden;
   vertical-align: bottom;
+}
+
+body section.main.fixed-width header nav.main ul.menu {
+  padding-left: 0;
+  margin: 0;
+  margin-bottom: 10px;
+  overflow: hidden;
   list-style-type: none;
 }
 
-body section.main.fixed-width header ul.menu a {
+body section.main.fixed-width header nav.main ul.menu a {
+  font-family: times-gothic;
   color: #cccccc;
   text-decoration: none;
 }
 
-body section.main.fixed-width header ul.menu > li {
+body section.main.fixed-width header nav.main ul.menu > li {
   float: left;
   padding: 3px;
   margin-right: 8px;
@@ -7110,12 +7141,12 @@ body section.main.fixed-width header ul.menu > li {
           border-radius: 5px;
 }
 
-body section.main.fixed-width header ul.menu > li > a {
+body section.main.fixed-width header nav.main ul.menu > li > a {
   font-size: 20px;
   font-weight: bold;
 }
 
-body section.main.fixed-width header ul.menu > li ul {
+body section.main.fixed-width header nav.main ul.menu > li ul {
   position: absolute;
   z-index: 10;
   display: none;
@@ -7133,20 +7164,20 @@ body section.main.fixed-width header ul.menu > li ul {
   -moz-border-radius-topleft: 0;
 }
 
-body section.main.fixed-width header ul.menu > li ul li {
+body section.main.fixed-width header nav.main ul.menu > li ul li {
   min-width: 100px;
   margin: 3px;
 }
 
-body section.main.fixed-width header ul.menu > li ul li a {
+body section.main.fixed-width header nav.main ul.menu > li ul li a {
   margin-left: 10px;
 }
 
-body section.main.fixed-width header ul.menu > li:hover {
+body section.main.fixed-width header nav.main ul.menu > li:hover {
   background: url('/static/img/translucent-dark-pixel.png');
 }
 
-body section.main.fixed-width header ul.menu > li.dropdown:hover {
+body section.main.fixed-width header nav.main ul.menu > li.dropdown:hover {
   -webkit-border-bottom-right-radius: 0;
           border-bottom-right-radius: 0;
   -webkit-border-bottom-left-radius: 0;
@@ -7155,8 +7186,43 @@ body section.main.fixed-width header ul.menu > li.dropdown:hover {
   -moz-border-radius-bottomleft: 0;
 }
 
-body section.main.fixed-width header ul.menu > li.dropdown:hover ul {
+body section.main.fixed-width header nav.main ul.menu > li.dropdown:hover ul {
   display: block;
+}
+
+body section.main.fixed-width header nav.account {
+  position: absolute;
+  top: 71px;
+  right: 10px;
+  padding: 3px;
+  padding-right: 7px;
+  padding-left: 7px;
+  color: #883333;
+  text-shadow: 0.1em 0.1em black;
+  background: #333333;
+  background-color: #333333;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#222222), color-stop(30%, #333333), to(#333333));
+  background-image: -webkit-linear-gradient(#222222, #333333 30%, #333333);
+  background-image: -moz-linear-gradient(top, #222222, #333333 30%, #333333);
+  background-image: -o-linear-gradient(#222222, #333333 30%, #333333);
+  background-image: linear-gradient(#222222, #333333 30%, #333333);
+  background-repeat: no-repeat;
+  border: 1px solid #111;
+  border-bottom: none;
+  -webkit-border-top-right-radius: 3px;
+          border-top-right-radius: 3px;
+  -webkit-border-top-left-radius: 3px;
+          border-top-left-radius: 3px;
+  -moz-border-radius-topright: 3px;
+  -moz-border-radius-topleft: 3px;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff222222', endColorstr='#ff333333', GradientType=0);
+}
+
+body section.main.fixed-width header nav.account a {
+  font-family: dark-garden;
+  font-size: 10px;
+  color: #cccccc;
+  text-decoration: none;
 }
 
 body section.main.fixed-width > article,
@@ -7164,15 +7230,49 @@ body section.main.fixed-width > section {
   padding: 10px;
 }
 
+body section.main.fixed-width section.main a.button {
+  padding: 5px;
+  color: #cccccc;
+  background-color: #661111;
+  background-image: -moz-linear-gradient(top, #661111, #550000);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#661111), to(#550000));
+  background-image: -webkit-linear-gradient(top, #661111, #550000);
+  background-image: -o-linear-gradient(top, #661111, #550000);
+  background-image: linear-gradient(to bottom, #661111, #550000);
+  background-repeat: repeat-x;
+  border: 2px solid #550000;
+  -webkit-border-radius: 15px;
+     -moz-border-radius: 15px;
+          border-radius: 15px;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff661111', endColorstr='#ff550000', GradientType=0);
+  -webkit-box-shadow: inset 0px 0px 10px #772222;
+     -moz-box-shadow: inset 0px 0px 10px #772222;
+          box-shadow: inset 0px 0px 10px #772222;
+}
+
+body section.main.fixed-width section.main a.button:hover {
+  text-decoration: none;
+  background-color: #661111;
+  background-image: -moz-linear-gradient(top, #550000, #661111);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#550000), to(#661111));
+  background-image: -webkit-linear-gradient(top, #550000, #661111);
+  background-image: -o-linear-gradient(top, #550000, #661111);
+  background-image: linear-gradient(to bottom, #550000, #661111);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff550000', endColorstr='#ff661111', GradientType=0);
+}
+
 body section.main.fixed-width article.home section.main h1 {
   position: relative;
   z-index: 5;
   margin: 0;
-  font-family: impact;
-  font-size: 62px;
+  margin-top: 20px;
+  font-family: hog-runes;
+  font-size: 102px;
   font-weight: normal;
   color: #ccccab;
   text-align: center;
+  text-shadow: 0.03em 0.03em #660000;
 }
 
 body section.main.fixed-width article.home section.main img.logo {
@@ -7180,7 +7280,7 @@ body section.main.fixed-width article.home section.main img.logo {
   top: -80px;
   display: block;
   margin-right: auto;
-  margin-bottom: -80px;
+  margin-bottom: -160px;
   margin-left: auto;
 }
 
@@ -7189,11 +7289,59 @@ body section.main.fixed-width article.home section.main .scratchings {
   font-family: killer;
   font-weight: normal;
   color: #661111;
+  text-shadow: 0.03em 0.03em black;
 }
 
 body section.main.fixed-width article.home section.main h4.scratchings {
+  position: relative;
+  z-index: 5;
+  margin-bottom: 5px;
   font-size: 52px;
   text-align: center;
+}
+
+body section.main.fixed-width table.account {
+  margin-right: 20px;
+  margin-left: 20px;
+}
+
+body section.main.fixed-width table.account td,
+body section.main.fixed-width table.account th {
+  padding-top: 7px;
+  padding-bottom: 7px;
+  background: #383838;
+  border-bottom: 1px solid #333333;
+  -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+          border-radius: 5px;
+}
+
+body section.main.fixed-width table.account tr:last-child > td,
+body section.main.fixed-width table.account tr:last-child > th {
+  border-bottom: none;
+}
+
+body section.main.fixed-width table.account th {
+  padding-right: 5px;
+  font-family: times-gothic;
+  font-size: 16px;
+  text-align: right;
+  vertical-align: top;
+  border-right: 1px solid #333333;
+}
+
+body section.main.fixed-width table.account td {
+  padding-left: 10px;
+  font-family: hog-runes;
+  font-size: 24px;
+}
+
+body section.main.fixed-width section.account-details {
+  overflow: auto;
+}
+
+body section.main.fixed-width section.account-details a.button {
+  float: right;
 }
 
 body section.main.fixed-width section > article h2 {
@@ -7215,6 +7363,14 @@ body section.main.fixed-width section article.warning {
 
 body section.main.fixed-width section article.warning span {
   color: #ddaa00;
+}
+
+body section.main.fixed-width section form label > span.required {
+  color: red;
+}
+
+body section.main.fixed-width section form textarea {
+  width: 98%;
 }
 
 body section.main.fixed-width section.about h1 {
