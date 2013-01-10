@@ -4,6 +4,15 @@ from webapp2_extras import routes
 from handlers.admin import base
 
 
+class AccountMain(base.AdminHandler):
+
+    templatedir = 'account'
+    templatefile = 'main'
+
+    def get(self, *args, **kwargs):
+        self.response.out.write(self.loadtemplate())
+
+
 class RankBase(base.AdminHandler):
 
     templatedir = 'rank'
@@ -92,6 +101,7 @@ class UserDelete(UserBase, base.Delete):
 
 
 routes = [
+    Route(r'/', AccountMain, name='admin-account-main'),
     routes.PathPrefixRoute(r'/ranks', [
         Route(r'/', RankList, name='admin-rank-list'),
         Route(r'/create', RankCreate, name='admin-rank-create'),

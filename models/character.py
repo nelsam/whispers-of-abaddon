@@ -4,16 +4,22 @@ from generic import Record
 import logging
 
 
-class profession(ndb.Model):
-    name = ndb.StringProperty(indexed=False)
+class Profession(Record, ndb.Model):
+    pass
 
 
-class race(ndb.Model):
-    name = ndb.StringProperty(indexed=False)
+class Race(Record, ndb.Model):
+    pass
+
+
+class Discipline(Record, ndb.Model):
+    pass
 
 
 class character(Record, ndb.Model):
     profession = ndb.KeyProperty(indexed=False)
+    race = ndb.KeyProperty(indexed=False)
+    disciplines = ndb.KeyProperty(repeated=True)
     leveldata = ndb.IntegerProperty(default=1)
 
     @property
