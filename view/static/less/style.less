@@ -238,7 +238,7 @@ body {
         }
       }
 
-      a.button {
+      .button {
         #gradient .vertical(@theme-tertiary-background-color + #111,
                             @theme-tertiary-background-color);
         .border-radius(15px);
@@ -248,7 +248,7 @@ body {
         color: @theme-main-foreground-color;
       }
 
-      a.button:hover {
+      .button:hover {
         #gradient .vertical(@theme-tertiary-background-color,
                             @theme-tertiary-background-color + #111);
         text-decoration: none;
@@ -332,6 +332,26 @@ body {
         font-family: times-gothic;
         font-size: 14px;
         padding-left: 10px;
+      }
+
+      tr.list > td {
+          padding: 0;
+
+          ul {
+              margin: 0;
+              margin-bottom: 3px;
+              li {
+                  overflow: auto;
+                  display: block;
+                  border-bottom: 1px solid @theme-main-background-color;
+                  padding: 3px;
+                  padding-left: 10px;
+
+                  .button {
+                      margin-left: 10px;
+                  }
+              }
+          }
       }
     }
 

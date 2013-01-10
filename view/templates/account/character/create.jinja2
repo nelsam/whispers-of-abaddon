@@ -1,0 +1,8 @@
+{% extends 'baselayout.jinja2' %}
+
+{% block maincontent %}
+  <form class="character" method="post">
+    {{form|safe}}
+    <input class="button" type="submit" value="Save"/>
+  </form>
+{% endblock %}

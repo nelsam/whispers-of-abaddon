@@ -17,6 +17,31 @@
           {% endfor %}
         </td>
       </tr>
+      <tr class="list">
+        <th>Characters</th>
+        <td>
+          <ul>
+            {% for character in user.characters %}
+              <li>
+                {% if character.ismain %}
+                  <span class="main-character">[Main]</span>
+                {% endif %}
+                {{character.name}}
+                <a class="button"
+                   href="/account/character/edit/{{character.key.urlsafe()}}">
+                  Edit Character
+                </a>
+                <a class="button"
+                   href="/account/character/delete/{{character.key.urlsafe()}}">
+                  Delete Character
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+          <a class="button"
+             href="/account/character/create">Add Character</a>
+        </td>
+      </tr>
     </table>
     <a class="button" href="/account/edit">Edit Details</a>
   </section>

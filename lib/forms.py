@@ -1,6 +1,10 @@
+import os
+os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
+
 from django import forms
 from django.utils.safestring import mark_safe
 
+from models.character import Profession, Race, Discipline
 
 class Base(forms.Form):
     validate = False
@@ -141,3 +145,30 @@ class AdminAccount(Account):
     Same as an account, but allows admins to set a few other things.
     """
     isadmin = forms.BooleanField(label="Site Admin", required=False)
+
+professions = [(profession.key.urlsafe(), profession.name)
+               for profession in Profession.query()]
+races = [(race.key.urlsafe(), race.name)
+         for race in Race.query()]
+disciplines = [(discipline.key.urlsafe(), discipline.name)
+               for discipline in Discipline.query()]
+
+class Character(Base):
+    """
+    A form to allow a user to attach a character to their account.
+    """
+    name = forms.CharField(label="Name: ")
+    profession = forms.ChoiceField(choices=professions,
+                                   widget=forms.Select(),
+                                   label="Profession: ")
+    race = forms.ChoiceField(choices=races,
+                             widget=forms.Select(),
+                             label="Race: ")
+    discipline1 = forms.ChoiceField(choices=disciplines,
+                                    widget=forms.Select(),
+                                    label="First Crafting Discipline: ")
+    discipline2 = forms.ChoiceField(choices=disciplines,
+                                    widget=forms.Select(),
+                                    label="Second Crafting Discipline: ")
+    description = forms.CharField(label="Character Profile: ",
+                                  widget=forms.Textarea())
