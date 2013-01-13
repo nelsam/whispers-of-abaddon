@@ -82,11 +82,8 @@ class BaseHandler(webapp2.RequestHandler):
         context['user'] = self.user
         if self.user:
             context['logouturl'] = users.create_logout_url(self.request.path)
-            context['admin'] = (users.is_current_user_admin() or
-                                self.user.siteadmin)
         else:
             context['loginurl'] = users.create_login_url(self.request.path)
-            context['admin'] = False
 
         templatepath = '%s.jinja2' % templatepath
         template = self.environment.get_template(templatepath)
@@ -158,6 +155,18 @@ class Create(ProcessForm):
 class Edit(ProcessForm):
 
     templatefile = 'edit'
+
+    @property
+    def parentpath(self):
+        """
+        In the edit handler, the parent path will be /edit instead
+        of /, because the edit handler requires an item key.  Thus,
+        we need to override parentpath to act like grandparentpath,
+        so that redirects happen correctly.
+
+        There *is* a better way to do this.
+        """
+        return self.levelup(self.levelup(self.request.path))
 
     def get(self, itemkey, *args, **kwargs):
         item = self.model.getbykey(itemkey)

@@ -67,8 +67,17 @@ class UserBase(base.AdminHandler):
 
     def __init__(self, *args, **kwargs):
         super(UserBase, self).__init__(*args, **kwargs)
+        from models.account import Rank as RankModel
+        self.rankmodel = RankModel
+
         from lib.forms import AdminAccount as UserForm
-        self.form = UserForm
+        def formwrapper(*args, **kwargs):
+            userplacement = self.user.rank.placement if self.user.rank else None
+            if self.user.hasroot:
+                userplacement = -1
+            kwargs['maxrank'] = userplacement
+            return UserForm(*args, **kwargs)
+        self.form = formwrapper
 
         from models.account import User as UserModel
         self.model = UserModel
@@ -82,10 +91,12 @@ class UserList(UserBase, base.List):
 class UserEdit(UserBase, base.Edit):
 
     def formcontext(self, item):
+        rankkey = item.rankkey.urlsafe() if item.rankkey else ''
         formcontext = {
             'name': item.name,
             'about': item.description,
             'isadmin': item.siteadmin,
+            'rank': rankkey,
         }
         return formcontext
 
@@ -93,6 +104,7 @@ class UserEdit(UserBase, base.Edit):
         item.name = form.cleaneddata['name']
         item.description = form.cleaneddata['about']
         item.siteadmin = form.cleaneddata['isadmin']
+        item.rank = self.rankmodel.getbykey(form.cleaneddata['rank'])
         return item
 
 

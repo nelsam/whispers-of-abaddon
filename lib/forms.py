@@ -1,10 +1,15 @@
 import os
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
+from copy import deepcopy
+
 from django import forms
 from django.utils.safestring import mark_safe
 
-from models.character import Profession, Race, Discipline
+from models.character import (Profession as ProfessionModel,
+                              Race as RaceModel,
+                              Discipline as DisciplineModel)
+from models.account import Rank as RankModel
 
 class Base(forms.Form):
     validate = False
@@ -140,18 +145,40 @@ class Account(Base):
     about = forms.CharField(label="About You: ", widget=forms.Textarea())
 
 
+baseranks = [('', 'Not a Member')]
+allranks = deepcopy(baseranks)
+allranks.extend([(rank.key.urlsafe(), rank.name)
+                 for rank in RankModel.hierarchy()])
+
 class AdminAccount(Account):
     """
     Same as an account, but allows admins to set a few other things.
     """
     isadmin = forms.BooleanField(label="Site Admin", required=False)
+    rank = forms.ChoiceField(choices=allranks,
+                             widget=forms.Select(),
+                             label="Guild Rank",
+                             required=False)
+
+    def __init__(self, *args, **kwargs):
+        if 'maxrank' in kwargs:
+            maxrank = kwargs['maxrank']
+            del kwargs['maxrank']
+            ranks = deepcopy(baseranks)
+            ranks.extend([(rank.key.urlsafe(), rank.name)
+                          for rank in RankModel.hierarchy(maxrank=maxrank)])
+
+        super(AdminAccount, self).__init__(*args, **kwargs)
+        
+        self.fields['rank'].choices = ranks
+    
 
 professions = [(profession.key.urlsafe(), profession.name)
-               for profession in Profession.query()]
+               for profession in ProfessionModel.query()]
 races = [(race.key.urlsafe(), race.name)
-         for race in Race.query()]
+         for race in RaceModel.query()]
 disciplines = [(discipline.key.urlsafe(), discipline.name)
-               for discipline in Discipline.query()]
+               for discipline in DisciplineModel.query()]
 
 class Character(Base):
     """

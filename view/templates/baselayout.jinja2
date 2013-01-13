@@ -55,7 +55,7 @@
           </div>
         </header>
         <section class="main">
-          {% if admin %}
+          {% if user and user.hasroot %}
             <nav class="admin">
               <h4>Administration</h4>
               <ul>
