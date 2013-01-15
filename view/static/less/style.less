@@ -172,8 +172,7 @@ body {
                 padding-right: 7px;
                 padding-left: 7px;
                 #gradient .vertical-three-colors(@theme-main-background-color - #111,
-                                                 @theme-main-background-color,
-                                                 30%,
+                                                 @theme-main-background-color, 30%,
                                                  @theme-main-background-color);
                 .border-top-right-radius(3px);
                 .border-top-left-radius(3px);
@@ -181,12 +180,39 @@ body {
                 border-bottom: none;
                 color: @theme-tertiary-background-color + #333;
                 text-shadow: 0.1em 0.1em black;
+                cursor: pointer;
 
-                a {
+                span {
                     text-decoration: none;
                     color: @theme-main-foreground-color;
                     font-family: dark-garden;
+                    padding: 2px;
                     font-size: 10px;
+
+                    nav.dropdown {
+                        display: none;
+                        position: absolute;
+                        top: 28px;
+                        right: 0px;
+                        min-width: 150px;
+                        background: @theme-tertiary-background-color;
+                        .border-radius(5px);
+                        .border-top-right-radius(0px);
+                        padding-top: 10px;
+                        .box-shadow(inset 0px 0px 15px @theme-tertiary-background-color - #222);
+                    }
+                }
+            }
+
+            nav.account:hover {
+                #gradient .vertical-three-colors(@theme-tertiary-background-color - #222,
+                                                 @theme-tertiary-background-color - #111, 30%,
+                                                 @theme-tertiary-background-color - #111);
+                span {
+
+                    nav.dropdown {
+                        display: block;
+                    }
                 }
             }
         }

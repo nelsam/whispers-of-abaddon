@@ -35,11 +35,15 @@
             </nav>
             <nav class="account">
               {% if user %}
-                <a href="/account/">
+                <span>
                   {{user.name or 'Account Preferences'}}
-                </a> / <a href="{{logouturl}}">
-                  Log Out
-                </a>
+                  <nav class="dropdown">
+                    <ul>
+                      <li><a href="/account/">Account Preferences</a></li>
+                      <li><a href="{{logouturl}}">Logout</a></li>
+                    </ul>
+                  </nav>
+                </span>
               {% else %}
                 <a href="{{loginurl}}">Log In</a>
               {% endif %}
