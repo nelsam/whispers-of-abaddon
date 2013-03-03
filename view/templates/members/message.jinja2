@@ -1,0 +1,19 @@
+{% extends '/baselayout.jinja2' %}
+
+{% block maincontent %}
+  <h3>Sending Message to {{target.name}}</h3>
+  {% if parent %}
+    <h4>Replying to: {{parent.name}}</h4>
+    <section class="reply-to">
+      {% for paragraph in parent.paragraphs %}
+        <p>{{paragraph}}</p>
+      {% endfor %}
+    </section>
+  {% endif %}
+  <form method="post">
+    {{form}}
+    <button class="button" type="submit">
+      Send
+    </button>
+  </form>
+{% endblock %}

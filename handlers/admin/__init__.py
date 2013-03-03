@@ -1,4 +1,3 @@
-from webapp2 import Route
 from webapp2_extras import routes
 
 import base

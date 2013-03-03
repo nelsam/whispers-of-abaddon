@@ -10,72 +10,104 @@
     <script type="text/javascript" src="/static/js/less.js"></script>
   </head>
   <body>
-    {% block body %}
-      <section class="main fixed-width">
-        <header class="main">
-					<a class="image-link" href="/">
-						<img class="logo"
-								 width="100"
-								 height="100"
-								 src="/static/img/logo.svg"/>
-					</a>
-          {% block navigation %}
-            <nav class="main">
-              <ul class="menu">
-                <li>
-                  <a href="/">Home</a>
-                </li>
-							  <li>
-								  <a href="/about">About Us</a>
-							  </li>
-							  <li>
-								  <a href="/lore">Lore</a>
-							  </li>
-              </ul>
-            </nav>
-            <nav class="account">
-              {% if user %}
-                <span>
-                  {{user.name or 'Account Preferences'}}
-                  <nav class="dropdown">
-                    <ul>
-                      <li><a href="/account/">Account Preferences</a></li>
-                      <li><a href="{{logouturl}}">Logout</a></li>
-                    </ul>
-                  </nav>
-                </span>
-              {% else %}
-                <a href="{{loginurl}}">Log In</a>
-              {% endif %}
-            </nav>
-          {% endblock %}
-          <div class="title">
-            <h4>
-							Upon our shoulders rests the task of a god
-            </h4>
-            <h4>
-							We must finish what Abaddon started
-            </h4>
-          </div>
-        </header>
-        <section class="main">
-          {% if user and user.hasroot %}
-            <nav class="admin">
-              <h4>Administration</h4>
-              <ul>
-                <li><a href="/admin/about/">About</a></li>
-                <li><a href="/admin/lore/">Lore</a></li>
-                <li><a href="/admin/account/">Accounts</a></li>
-                <li><a href="/admin/character/">Character Details</a></li>
-              </ul>
-            </nav>
-          {% endif %}
-          {% block maincontent %}
-          {% endblock %}
-        </section>
-				<footer>
-				</footer>
+    <!--[if IE]>
+      <section class="error">
+        I apologize, but you appear to be from the past.  Please upgrade
+        to a proper web browser - preferably open source.  Try
+        <a href="http://www.firefox.com/">Firefox</a> or
+        <a href="http://www.google.com/chrome">Google Chrome</a>.
       </section>
-    {% endblock %}
+    <![endif]-->
+    <!--[if !(IE)]><!-->
+      {% block body %}
+        <section class="main fixed-width">
+          <header class="main">
+            <a class="image-link" href="/">
+              <img class="logo"
+                   width="100"
+                   height="100"
+                   src="/static/img/logo.svg"/>
+            </a>
+            {% block navigation %}
+              <nav class="main">
+                <ul class="menu">
+                  <li>
+                    <a href="/">Home</a>
+                  </li>
+                  <li>
+                    <a href="/about">About Us</a>
+                  </li>
+                  <li>
+                    <a href="/lore">Lore</a>
+                  </li>
+                  <li>
+                    <a href="/members/">Members</a>
+                  </li>
+                </ul>
+              </nav>
+              {% if user %}
+                {% set accountclass = "account" %}
+                {% if user.unreadmessages %}
+                  {% set accountclass = "account newmail" %}
+                {% endif %}
+                <nav class="{{accountclass}}">
+                  <span>
+                    {{user.name or 'Your Account'}}
+                    <nav class="dropdown">
+                      <ul>
+                        <li>
+                          <a href="/account/inbox/">
+                            Mail ({{user.unreadmessages}} Unread Message
+                            {%- if user.unreadmessages != 1 -%}
+                              s
+                            {%- endif -%}
+                            )
+                          </a>
+                        </li>
+                        <li><a href="/account/">Account Preferences</a></li>
+                        <li><a href="{{logouturl}}">Logout</a></li>
+                      </ul>
+                    </nav>
+                  </span>
+                  {% if user.unreadmessages %}
+                    <a class="{{mailclass}}" href="/account/">
+                    </a>
+                  {% endif %}
+                </nav>
+              {% else %}
+                <nav class="login">
+                  <a href="{{loginurl}}">Log In | Sign Up</a>
+                </nav>
+              {% endif %}
+            {% endblock %}
+            <div class="title">
+              <h4>
+                Upon our shoulders rests the task of a god
+              </h4>
+              <h4>
+                We must finish what Abaddon started
+              </h4>
+            </div>
+          </header>
+          <section class="main">
+            {% if user and user.hasroot %}
+              <nav class="admin">
+                <h4>Administration</h4>
+                <ul>
+                  <li><a href="/admin/about/">About</a></li>
+                  <li><a href="/admin/lore/">Lore</a></li>
+                  <li><a href="/admin/account/">Accounts</a></li>
+                  <li><a href="/admin/character/">Character Details</a></li>
+                </ul>
+              </nav>
+            {% endif %}
+            {% block maincontent %}
+            {% endblock %}
+          </section>
+          <footer>
+          </footer>
+        </section>
+      {% endblock %}
+    <!--<![endif]-->
   </body>
 </html>

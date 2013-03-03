@@ -4,8 +4,6 @@ from google.appengine.api import users
 
 import settings
 
-import tarfile
-
 
 class StaticHandler(webapp2.RequestHandler):
 
@@ -73,7 +71,7 @@ class BaseHandler(webapp2.RequestHandler):
 
         return user
 
-    def loadtemplate(self, context={}):      
+    def loadtemplate(self, context={}):
         templatepath = self.templatepath or self.request.path
         return self._loadtemplate(templatepath=templatepath,
                                   context=context)

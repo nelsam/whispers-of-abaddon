@@ -1,7 +1,7 @@
 from google.appengine.ext import ndb
 from google.appengine.api import users
 
-from generic import Record
+from .generic import Record
 
 
 class Rank(Record, ndb.Model):
@@ -17,7 +17,9 @@ class Rank(Record, ndb.Model):
             query = query.filter(class_.placement >= maxrank)
 
         query = query.order(class_.placement)
+
         return query
+
 
 class User(Record, ndb.Model):
     userid = ndb.StringProperty()
@@ -25,6 +27,7 @@ class User(Record, ndb.Model):
     characterkeys = ndb.KeyProperty(repeated=True)
     rankkey = ndb.KeyProperty()
     siteadmin = ndb.BooleanProperty(default=False)
+    followingkeys = ndb.KeyProperty(repeated=True)
 
     @property
     def characters(self):
@@ -53,8 +56,60 @@ class User(Record, ndb.Model):
     def hasroot(self):
         return self.siteadmin or users.is_current_user_admin()
 
+    @property
+    def unreadmessages(self):
+        import logging
+        logging.warning("Starting messages query")
+        if not hasattr(self, '_unread'):
+            logging.warning("Unread count is not cached")
+            if not hasattr(self, '_messagemodel'):
+                logging.warning("Message model is not cached")
+                from .communication import Message
+                self._messagemodel = Message
+            logging.warning("Storing filters")
+            receiverfilter = self._messagemodel.receiverkey
+            readfilter = self._messagemodel.read
+            logging.warning("Filters stored, generating query")
+            unreadquery = self._messagemodel.query(receiverfilter == self.key,
+                                                   readfilter == False)
+            logging.warning("Query created, getting count")
+            self._unread = unreadquery.count(50)
+        logging.warning("Got count: %s" % repr(self._unread))
+        return self._unread
+
+    @property
+    def messages(self):
+        if not hasattr(self, '_messages'):
+            if not hasattr(self, '_messagemodel'):
+                from communication import Message
+                self._messagemodel = Message
+            self._messages = self._messagemodel.query(receiverkey == self.key)
+        return self._messages
+
+    @property
+    def following(self):
+        if not hasattr(self, '_following'):
+            self._following = [key.get() for key in self.followingkeys]
+
+        return self._following
+
+    @following.setter
+    def following(self, value):
+        self._following = value
+        self.followingkeys = [item.key for item in value]
+
+    def isfollowing(self, target):
+        """
+        Check if this user is following a target user.
+        """
+        return target.key in self.followingkeys
+
     def put(self, *args, **kwargs):
         if hasattr(self, '_characters'):
             self.characterkeys = [char.key for char in self._characters]
+
+        if hasattr(self, '_following'):
+            self.followingkeys = [following.key for
+                                  following in self._following]
 
         super(User, self).put(*args, **kwargs)

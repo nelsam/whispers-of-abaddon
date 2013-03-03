@@ -1,4 +1,4 @@
-from base import BaseHandler
+from .base import BaseHandler
 
 
 class Home(BaseHandler):
@@ -23,7 +23,7 @@ class Scribes(BaseHandler):
     def query(self):
         from models.scribes import OrderedRecord as Record
         query = Record.query(Record.section == self.scribetype)
-        records = query#.order(Record.rank)
+        records = query
 
         return records
 
@@ -39,8 +39,8 @@ class Lore(Scribes):
     templatepath = 'simple/lore'
     scribetype = 'lore'
 
+
 class About(Scribes):
 
     templatepath = 'simple/about'
     scribetype = 'about'
-

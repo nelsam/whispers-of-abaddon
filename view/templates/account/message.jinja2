@@ -1,0 +1,29 @@
+{% extends 'baselayout.jinja2' %}
+
+{% block maincontent %}
+  <article class="message">
+    <h4 class="from">From: {{message.sender.name}}</h4>
+    <h3 class="subject">Subject: {{message.name}}</h3>
+    <section class="thread">
+      {% for message in thread %}
+        {% set messageclass = "message" %}
+        {% if not message.read %}
+          {% set messageclass = "message unread" %}
+        {% endif %}
+        <article class="parentmessage">
+          <a class="{{messageclass}}" href="/account/inbox/{{message.key.urlsafe()}}">
+            <span class="summary">{{message.summary}}</span>
+          </a>
+        </article>
+      {% endfor %}
+    </section>
+    <section class="message">
+      {% for paragraph in message.paragraphs %}
+        <p>{{paragraph}}</p>
+      {% endfor %}
+    </section>
+    <a class="button" href="/members/reply/{{message.key.urlsafe()}}">
+      Reply
+    </a>
+  </article>
+{% endblock %}

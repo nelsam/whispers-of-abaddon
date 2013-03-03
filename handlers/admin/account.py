@@ -37,7 +37,7 @@ class RankCreate(RankBase, base.Create):
             name=form.cleaneddata['title'],
             placement=form.cleaneddata['placement'])
         newentry.description = form.cleaneddata['body']
-        return newentry    
+        return newentry
 
 
 class RankEdit(RankBase, base.Edit):
@@ -71,6 +71,7 @@ class UserBase(base.AdminHandler):
         self.rankmodel = RankModel
 
         from lib.forms import AdminAccount as UserForm
+
         def formwrapper(*args, **kwargs):
             userplacement = self.user.rank.placement if self.user.rank else None
             if self.user.hasroot:

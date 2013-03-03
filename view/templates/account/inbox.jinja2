@@ -1,0 +1,19 @@
+{% extends 'baselayout.jinja2' %}
+
+{% block maincontent %}
+  <article class="inbox">
+    <h3 class="title">Message Inbox</h3>
+    {% for message in messages %}
+      {% set messageclass = "message" %}
+      {% if not message.read %}
+        {% set messageclass = "message unread" %}
+      {% endif %}
+      <a class="{{messageclass}}" href="/account/inbox/{{message.key.urlsafe()}}">
+        <input type="checkbox"/>
+        <span class="from">{{message.sender.name}}</span>
+        <span class="subject">{{message.name}}</span>
+        <span class="summary">{{message.summary}}</span>
+      </a>
+    {% endfor %}
+  </article>
+{% endblock %}

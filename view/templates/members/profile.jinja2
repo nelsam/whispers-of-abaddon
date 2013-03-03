@@ -1,0 +1,46 @@
+{% extends '/baselayout.jinja2' %}
+
+{% block maincontent %}
+  {% if user %}
+    <aside class="member actions">
+      <a class="button" href="/members/message/{{member.key.urlsafe()}}">
+        Send Message
+      </a>
+      {% if user.isfollowing(member) %}
+        {% set action="unfollow" %}
+      {% else %}
+        {% set action="follow" %}
+      {% endif %}
+      <a class="button" href="/members/{{action}}/{{member.key.urlsafe()}}">
+        {{action.title()}} Member
+      </a>
+    </aside>
+  {% endif %}
+  <article class="member profile">
+    <h3>{{member.name}}'s Profile</h3>
+    {% if member.rank %}
+      <h4>Rank: {{member.rank.name}}</h4>
+    {% endif %}
+    <section class="about">
+      <h4 class="title">About {{member.name}}</h4>
+      {% for paragraph in member.paragraphs %}
+        <p>{{paragraph}}</p>
+      {% endfor %}
+    </section>
+    {% if member.characters %}
+      <section class="characters">
+        <h4 class="title">{{member.name}}'s Characters</h4>
+        {% for character in member.characters %}
+          <article class="character">
+            <section class="character about">
+              <h4 class="title">{{character.name}}</h5>
+              {% for paragraph in character.paragraphs %}
+                <p>{{paragraph}}</p>
+              {% endfor %}
+            </section>
+          </article>
+        {% endfor %}
+      </section>
+    {% endif %}
+  </article>
+{% endblock %}

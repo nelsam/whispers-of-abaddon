@@ -1,7 +1,7 @@
 from google.appengine.ext import ndb
 from webapp2 import Route
 
-from handlers.admin import base
+from . import base
 
 from models.scribes import OrderedRecord as Record
 

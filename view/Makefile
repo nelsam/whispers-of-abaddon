@@ -25,8 +25,8 @@ build:
 	@cp -r templates/* docs/assets/templates/
 	@find docs/assets/templates -iname '*.jinja2' -exec sed -i 's|<link.*href="/static/less/bootstrap.less".*>|<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css"/>|g' {} \;
 	@find docs/assets/templates -iname '*.jinja2' -exec sed -i 's|<script.*src="/static/js/less.js".*</script>||g' {} \;
-	@cp static/img/* docs/assets/static/img/
-	@cp static/fonts/* docs/assets/static/fonts/
+	@cp -r static/img/* docs/assets/static/img/
+	@cp -r static/fonts/* docs/assets/static/fonts/
 	@find static/js -iname '*.js' ! -name 'less.js' -exec cp {} docs/assets/static/js/ \;
 	@cp static/js/tests/vendor/jquery.js docs/assets/static/js/
 	@echo "Compiling documentation...                  ${CHECK} Done"

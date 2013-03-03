@@ -1,0 +1,38 @@
+{% extends '/baselayout.jinja2' %}
+
+{% block maincontent %}
+  <section class="members">
+    <h3>Members</h3>
+    <article class="warning">
+      <p>
+        <span>NOTE</span>: This website is new.  Not all of our guild
+        members have been here, and most of them don't have an account
+        profile.  Without that, they won't show up on this list.
+      </p><p>
+        I'm working hard to figure out how many of them are still
+        playing and get them to create accounts, but this list won't
+        be comprehensive for quite a while.  So keep in mind that this
+        isn't the full list.
+      </p>
+    </article>
+    {% for rank in hierarchy if members[rank.name]['hasmembers'] %}
+      {% set rankmembers = members[rank.name]['results'] %}
+      <section class="rank {{rank.name}}">
+        <section class="rank {{rank.name}} description">
+          <h4>{{rank.name}}</h4>
+          {% for paragraph in rank.paragraphs %}
+            <p>{{paragraph}}</p>
+          {% endfor %}
+        </section>
+        {% for member in rankmembers %}
+          <article class="member {{rank.name}}">
+            <a class="member {{rank.name}}"
+               href="/members/{{member.key.urlsafe()}}">
+               {{member.name or 'No Name Chosen'}}
+            </a>
+          </article>
+        {% endfor %}
+      </section>
+    {% endfor %}
+  </section>
+{% endblock %}

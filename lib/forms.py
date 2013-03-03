@@ -4,25 +4,45 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 from copy import deepcopy
 
 from django import forms
-from django.utils.safestring import mark_safe
+#from django.utils.safestring import mark_safe
 
 from models.character import (Profession as ProfessionModel,
                               Race as RaceModel,
                               Discipline as DisciplineModel)
 from models.account import Rank as RankModel
 
+
 class Base(forms.Form):
+    """
+    The base form - much base functionality is here, most
+    forms should extend this.
+    """
     validate = False
 
     @property
     def isvalid(self):
+        """
+        I'm trying to keep the use of the shift key down.
+        This is just an alias for self.is_valid() for the
+        sake of consistency.
+        """
         return self.is_valid()
 
     @property
     def cleaneddata(self):
+        """
+        I'm trying to keep the use of the shift key down.
+        This is just an alias for self.cleaned_data for the
+        sake of consistency.
+        """
         return self.cleaned_data
 
     def makeelements(self, boundfield):
+        """
+        Creates all HTML elements for a given boundfield.
+
+        :returns: The raw HTML code for the passed in element.
+        """
         field = boundfield.field
 
         stringparts = []
@@ -47,15 +67,15 @@ class Base(forms.Form):
         stringparts.append('<div>')
 
         if isinstance(field.widget, forms.CheckboxInput):
-            stringparts.append(unicode(boundfield))
+            stringparts.append(str(boundfield))
 
-        stringparts.append(unicode(label))
+        stringparts.append(str(label))
 
         if isinstance(field.widget, forms.Textarea):
             stringparts.append('<br/>')
 
         if not isinstance(field.widget, forms.CheckboxInput):
-            stringparts.append(unicode(boundfield))
+            stringparts.append(str(boundfield))
 
         stringparts.append('</div>')
 
@@ -150,6 +170,7 @@ allranks = deepcopy(baseranks)
 allranks.extend([(rank.key.urlsafe(), rank.name)
                  for rank in RankModel.hierarchy()])
 
+
 class AdminAccount(Account):
     """
     Same as an account, but allows admins to set a few other things.
@@ -169,9 +190,9 @@ class AdminAccount(Account):
                           for rank in RankModel.hierarchy(maxrank=maxrank)])
 
         super(AdminAccount, self).__init__(*args, **kwargs)
-        
+
         self.fields['rank'].choices = ranks
-    
+
 
 professions = [(profession.key.urlsafe(), profession.name)
                for profession in ProfessionModel.query()]
@@ -179,6 +200,7 @@ races = [(race.key.urlsafe(), race.name)
          for race in RaceModel.query()]
 disciplines = [(discipline.key.urlsafe(), discipline.name)
                for discipline in DisciplineModel.query()]
+
 
 class Character(Base):
     """
@@ -199,3 +221,18 @@ class Character(Base):
                                     label="Second Crafting Discipline: ")
     description = forms.CharField(label="Character Profile: ",
                                   widget=forms.Textarea())
+
+
+class Message(Base):
+    """
+    Form to send a message to another user.
+    """
+    subject = forms.CharField(label="Subject: ")
+    message = forms.CharField(label="Message: ", widget=forms.Textarea())
+
+
+class Reply(Base):
+    """
+    Form to reply to another user.
+    """
+    message = forms.CharField(label="Message: ", widget=forms.Textarea())

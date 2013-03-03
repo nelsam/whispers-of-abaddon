@@ -1,4 +1,5 @@
-from handlers.base import BaseHandler, List, Create, Edit, Delete
+from ..base import BaseHandler
+from ..base import List, Create, Edit, Delete  # lint:ok
 
 import os
 
@@ -21,4 +22,3 @@ class AdminHandler(BaseHandler):
                                     self.templatepath) or self.request.path
         return super(AdminHandler, self)._loadtemplate(templatepath,
                                                        context=context)
-

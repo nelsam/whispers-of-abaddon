@@ -1,5 +1,6 @@
 from google.appengine.ext import ndb
-from generic import Record
+
+from .generic import Record
 
 import logging
 

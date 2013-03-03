@@ -1,53 +1,8 @@
-from base import BaseHandler, Create, Edit, Delete
+# -*- coding: utf-8 -*-
 
 from webapp2 import Route
-from webapp2_extras import routes
 
-
-class Account(BaseHandler):
-
-    templatepath = '/account/main'
-
-    def get(self, *args, **kwargs):
-        self.response.out.write(self.loadtemplate())
-
-
-class AccountEdit(BaseHandler):
-
-    templatepath = '/account/edit'
-
-    def __init__(self, *args, **kwargs):
-        super(AccountEdit, self).__init__(*args, **kwargs)
-        from lib.forms import Account as AccountForm
-        self.form = AccountForm
-
-    def get(self, *args, **kwargs):
-        return self.render()
-
-    def post(self, *args, **kwargs):
-        form = self.form(self.request.params)
-        form.validate = True
-        if form.isvalid:
-            self.user.name = form.cleaneddata['name']
-            self.user.description = form.cleaneddata['about']
-            self.user.put()
-            self.redirect('/account/')
-        else:
-            return self.render(form=form)
-
-    def render(self, form=None):
-        if form is None:
-            user_context = {
-                'name': self.user.name,
-                'about': self.user.description,
-            }
-            form = self.form(user_context)
-
-        context = {
-            'form': form,
-        }
-
-        self.response.out.write(self.loadtemplate(context))
+from ..base import BaseHandler, Create, Edit, Delete
 
 
 class CharacterBase(BaseHandler):
@@ -94,6 +49,12 @@ class CharacterCreate(CharacterBase, Create):
         character.profession = profession
         character.race = race
         character.disciplines = disciplines
+
+        # All of the following bits of logic require keys, so make
+        # sure the keys exist before running them.
+        if not self.user.key:
+            self.user.put()
+
         character.owner = self.user
         character.put()
 
@@ -116,7 +77,7 @@ class CharacterEdit(CharacterBase, Edit):
         }
         return formcontext
 
-    def edititem(self, item, form):
+    def updateitem(self, item, form):
         item.name = form.cleaneddata['name']
         item.description = form.cleaneddata['description']
 
@@ -147,14 +108,10 @@ class CharacterDelete(CharacterBase, Delete):
 
 
 routes = [
-    Route('/', Account, name='account'),
-    Route('/edit', AccountEdit, name='account-edit'),
-    routes.PathPrefixRoute('/character', [
-        Route(r'/', CharacterHome, name='account-character-home'),
-        Route(r'/create', CharacterCreate, name='account-character-create'),
-        Route(r'/edit/<itemkey>', CharacterEdit,
-              name='account-character-edit'),
-        Route(r'/delete/<itemkey>', CharacterDelete,
-              name='account-character-delete'),
-    ]),
+    Route(r'/', CharacterHome, name='account-character-home'),
+    Route(r'/create', CharacterCreate, name='account-character-create'),
+    Route(r'/edit/<itemkey>', CharacterEdit,
+          name='account-character-edit'),
+    Route(r'/delete/<itemkey>', CharacterDelete,
+          name='account-character-delete'),
 ]
