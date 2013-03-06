@@ -88,7 +88,7 @@ class CharacterEdit(CharacterBase, Edit):
         item.race = self.racemodel.getbykey(racekey)
 
         discipline1key = form.cleaneddata['discipline1']
-        discipline2key = form.cleanedddata['discipline2']
+        discipline2key = form.cleaneddata['discipline2']
 
         item.disciplines = [
             self.disciplinemodel.getbykey(discipline1key),

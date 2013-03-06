@@ -40,3 +40,22 @@ class Message(Record, ndb.Model):
             self._summary = self.description[:150]
 
         return self._summary
+
+
+class Forum(Record, ndb.Model):
+    viewlevel = ndb.IntegerProperty(required=True)
+    replylevel = ndb.IntegerProperty(required=True)
+    newthreadlevel = ndb.IntegerProperty(required=True)
+
+    def usercanview(self, user):
+        return user.rank.placement <= self.viewlevel
+
+    def usercanreply(self, user):
+        return user.rank.placement <= self.replylevel
+
+    def usercancreatethreads(self, user):
+        return user.rank.placement <= self.newthreadlevel
+
+
+class ForumThread(Message):
+    forum = ndb.KeyProperty(required=True)

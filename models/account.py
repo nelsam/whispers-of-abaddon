@@ -58,23 +58,15 @@ class User(Record, ndb.Model):
 
     @property
     def unreadmessages(self):
-        import logging
-        logging.warning("Starting messages query")
         if not hasattr(self, '_unread'):
-            logging.warning("Unread count is not cached")
             if not hasattr(self, '_messagemodel'):
-                logging.warning("Message model is not cached")
                 from .communication import Message
                 self._messagemodel = Message
-            logging.warning("Storing filters")
             receiverfilter = self._messagemodel.receiverkey
             readfilter = self._messagemodel.read
-            logging.warning("Filters stored, generating query")
             unreadquery = self._messagemodel.query(receiverfilter == self.key,
                                                    readfilter == False)
-            logging.warning("Query created, getting count")
             self._unread = unreadquery.count(50)
-        logging.warning("Got count: %s" % repr(self._unread))
         return self._unread
 
     @property
