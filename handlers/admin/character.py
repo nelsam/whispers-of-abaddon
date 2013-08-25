@@ -150,19 +150,21 @@ routes = [
     routes.PathPrefixRoute(r'/profession', [
         Route(r'/', ProfessionList, name='admin-profession-list'),
         Route(r'/create', ProfessionCreate, name='admin-profession-create'),
-        Route(r'/edit', ProfessionEdit, name='admin-profession-edit'),
-        Route(r'/delete', ProfessionDelete, name='admin-profession-delete'),
+        Route(r'/edit/<itemkey>', ProfessionEdit, name='admin-profession-edit'),
+        Route(r'/delete/<itemkey>', ProfessionDelete,
+              name='admin-profession-delete'),
     ]),
     routes.PathPrefixRoute(r'/race', [
         Route(r'/', RaceList, name='admin-race-list'),
         Route(r'/create', RaceCreate, name='admin-race-create'),
-        Route(r'/edit', RaceEdit, name='admin-race-edit'),
-        Route(r'/delete', RaceDelete, name='admin-race-delete'),
+        Route(r'/edit/<itemkey>', RaceEdit, name='admin-race-edit'),
+        Route(r'/delete/<itemkey>', RaceDelete, name='admin-race-delete'),
     ]),
     routes.PathPrefixRoute(r'/discipline', [
         Route(r'/', DisciplineList, name='admin-discipline-list'),
         Route(r'/create', DisciplineCreate, name='admin-discipline-create'),
-        Route(r'/edit', DisciplineEdit, name='admin-discipline-edit'),
-        Route(r'/delete', DisciplineDelete, name='admin-discipline-delete'),
+        Route(r'/edit/<itemkey>', DisciplineEdit, name='admin-discipline-edit'),
+        Route(r'/delete/<itemkey>', DisciplineDelete,
+              name='admin-discipline-delete'),
     ]),
 ]

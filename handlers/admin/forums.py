@@ -60,6 +60,6 @@ class ForumDelete(ForumBase, base.Delete):
 routes = [
     Route(r'/', ForumList, name='admin-forum-list'),
     Route(r'/create', ForumCreate, name='admin-forum-create'),
-    Route(r'/edit', ForumEdit, name='admin-forum-edit'),
-    Route(r'/delete', ForumDelete, name='admin-forum-delete'),
+    Route(r'/edit/<itemkey>', ForumEdit, name='admin-forum-edit'),
+    Route(r'/delete/<itemkey>', ForumDelete, name='admin-forum-delete'),
 ]
