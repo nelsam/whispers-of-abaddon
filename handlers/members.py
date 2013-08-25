@@ -114,7 +114,7 @@ class GenericMessage(BaseHandler):
             message.put()
             self.redirect('/members/%s' % receiver.key.urlsafe())
         else:
-            return self.render(memberkey, form)
+            return self.render(receiver, form, parent)
 
 
 class MemberMessage(GenericMessage):
@@ -142,7 +142,6 @@ class MemberReply(GenericMessage):
     def post(self, parentkey):
         message = self.messagemodel.getbykey(parentkey)
         return self.saveform(parent=message)
-
 
 
 routes = [

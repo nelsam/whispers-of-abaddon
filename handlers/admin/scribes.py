@@ -12,7 +12,7 @@ class Base(base.AdminHandler):
         super(Base, self).__init__(*args, **kwargs)
         self.scribetype = self.request.route_kwargs['scribetype']
 
-        from lib.forms import Record as OrderedRecordForm
+        from lib.forms import OrderedRecord as OrderedRecordForm
         self.form = OrderedRecordForm
 
         from models.scribes import OrderedRecord as OrderedRecordModel
@@ -27,7 +27,9 @@ class List(Base, base.List):
 
     @property
     def query(self):
-        return self.model.query(Record.section == self.scribetype)
+        query = self.model.query(self.model.section == self.scribetype)
+        query = query.order(self.model.rank)
+        return query
 
     @property
     def title(self):
@@ -39,7 +41,8 @@ class Create(Base, base.Create):
     def createitem(self, form):
         newentry = Record(
             section=self.scribetype,
-            name=form.cleaneddata['title'])
+            name=form.cleaneddata['title'],
+            rank=form.cleaneddata['rank'])
         newentry.description = form.cleaneddata['body']
         return newentry
 
@@ -50,12 +53,14 @@ class Edit(Base, base.Edit):
         formcontext = {
             'title': item.name,
             'body': item.description,
+            'rank': item.rank,
         }
         return formcontext
 
     def updateitem(self, item, form):
         item.name = form.cleaneddata['title']
         item.description = form.cleaneddata['body']
+        item.rank = form.cleaneddata['rank']
         return item
 
 

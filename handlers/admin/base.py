@@ -1,4 +1,6 @@
 from ..base import BaseHandler
+
+# Import List, Create, Edit, and Delete so that admin handlers can use them.
 from ..base import List, Create, Edit, Delete  # lint:ok
 
 import os

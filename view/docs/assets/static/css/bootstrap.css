@@ -7051,9 +7051,16 @@ a.badge:hover {
   src: url('/static/fonts/CurlyHogRunes-Medium.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: 'linden-hill';
+  src: url('/static/fonts/LindenHill-webfont.ttf') format('truetype');
+}
+
 body {
   height: 100%;
   margin: 0;
+  font-family: linden-hill;
+  font-size: 1.2em;
   background: #222222;
 }
 
@@ -7073,8 +7080,13 @@ body section.main.fixed-width {
           box-shadow: 0px 0px 30px #000000;
 }
 
+body section.main.fixed-width form label span.message {
+  color: red;
+}
+
 body section.main.fixed-width header {
   position: relative;
+  z-index: 20;
   height: 100px;
   margin-bottom: 10px;
   text-shadow: 0.2em 0.2em black;
@@ -7190,23 +7202,20 @@ body section.main.fixed-width header nav.main ul.menu > li.dropdown:hover ul {
   display: block;
 }
 
-body section.main.fixed-width header nav.account {
+body section.main.fixed-width header nav.account,
+body section.main.fixed-width header nav.login {
   position: absolute;
   top: 71px;
-  right: 10px;
+  right: 30px;
+  height: 22px;
   padding: 3px;
   padding-right: 7px;
   padding-left: 7px;
   color: #883333;
   text-shadow: 0.1em 0.1em black;
+  cursor: pointer;
   background: #333333;
   background-color: #333333;
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#222222), color-stop(30%, #333333), to(#333333));
-  background-image: -webkit-linear-gradient(#222222, #333333 30%, #333333);
-  background-image: -moz-linear-gradient(top, #222222, #333333 30%, #333333);
-  background-image: -o-linear-gradient(#222222, #333333 30%, #333333);
-  background-image: linear-gradient(#222222, #333333 30%, #333333);
-  background-repeat: no-repeat;
   border: 1px solid #111;
   border-bottom: none;
   -webkit-border-top-right-radius: 3px;
@@ -7215,14 +7224,168 @@ body section.main.fixed-width header nav.account {
           border-top-left-radius: 3px;
   -moz-border-radius-topright: 3px;
   -moz-border-radius-topleft: 3px;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff222222', endColorstr='#ff333333', GradientType=0);
+  -webkit-box-shadow: inset 0px 5px 5px -5px #222222;
+     -moz-box-shadow: inset 0px 5px 5px -5px #222222;
+          box-shadow: inset 0px 5px 5px -5px #222222;
 }
 
-body section.main.fixed-width header nav.account a {
+body section.main.fixed-width header nav.account span,
+body section.main.fixed-width header nav.login span,
+body section.main.fixed-width header nav.account a,
+body section.main.fixed-width header nav.login a {
+  padding: 2px;
   font-family: dark-garden;
   font-size: 10px;
   color: #cccccc;
   text-decoration: none;
+}
+
+body section.main.fixed-width header nav.account span nav.dropdown,
+body section.main.fixed-width header nav.login span nav.dropdown,
+body section.main.fixed-width header nav.account a nav.dropdown,
+body section.main.fixed-width header nav.login a nav.dropdown {
+  position: absolute;
+  top: 26px;
+  right: 0;
+  display: none;
+  min-width: 170px;
+  padding-top: 10px;
+  background: #550000;
+  -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+          border-radius: 5px;
+  -webkit-border-top-right-radius: 0;
+          border-top-right-radius: 0;
+  -moz-border-radius-topright: 0;
+  -webkit-box-shadow: inset 0px 0px 15px #330000;
+     -moz-box-shadow: inset 0px 0px 15px #330000;
+          box-shadow: inset 0px 0px 15px #330000;
+}
+
+body section.main.fixed-width header nav.account.newmail {
+  -webkit-animation-duration: 3s;
+     -moz-animation-duration: 3s;
+       -o-animation-duration: 3s;
+          animation-duration: 3s;
+  -webkit-animation-iteration-count: infinite;
+     -moz-animation-iteration-count: infinite;
+       -o-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  -webkit-animation-name: pulse;
+     -moz-animation-name: pulse;
+       -o-animation-name: pulse;
+          animation-name: pulse;
+  -webkit-animation-timing-function: ease-out;
+     -moz-animation-timing-function: ease-out;
+       -o-animation-timing-function: ease-out;
+          animation-timing-function: ease-out;
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-box-shadow: inset 0px 5px 5px -5px #222222;
+       -moz-box-shadow: inset 0px 5px 5px -5px #222222;
+            box-shadow: inset 0px 5px 5px -5px #222222;
+  }
+  33% {
+    -webkit-box-shadow: inset 0px 10px 10px -7px #000000;
+       -moz-box-shadow: inset 0px 10px 10px -7px #000000;
+            box-shadow: inset 0px 10px 10px -7px #000000;
+  }
+  66% {
+    -webkit-box-shadow: inset 0px 30px 30px -25px #440000;
+       -moz-box-shadow: inset 0px 30px 30px -25px #440000;
+            box-shadow: inset 0px 30px 30px -25px #440000;
+  }
+  100% {
+    -webkit-box-shadow: inset 0px 5px 5px -5px #222222;
+       -moz-box-shadow: inset 0px 5px 5px -5px #222222;
+            box-shadow: inset 0px 5px 5px -5px #222222;
+  }
+}
+
+@-moz-keyframes pulse {
+  0% {
+    -webkit-box-shadow: inset 0px 5px 5px -5px #222222;
+       -moz-box-shadow: inset 0px 5px 5px -5px #222222;
+            box-shadow: inset 0px 5px 5px -5px #222222;
+  }
+  33% {
+    -webkit-box-shadow: inset 0px 10px 10px -7px #000000;
+       -moz-box-shadow: inset 0px 10px 10px -7px #000000;
+            box-shadow: inset 0px 10px 10px -7px #000000;
+  }
+  66% {
+    -webkit-box-shadow: inset 0px 30px 30px -25px #440000;
+       -moz-box-shadow: inset 0px 30px 30px -25px #440000;
+            box-shadow: inset 0px 30px 30px -25px #440000;
+  }
+  100% {
+    -webkit-box-shadow: inset 0px 5px 5px -5px #222222;
+       -moz-box-shadow: inset 0px 5px 5px -5px #222222;
+            box-shadow: inset 0px 5px 5px -5px #222222;
+  }
+}
+
+@-o-keyframes pulse {
+  0% {
+    -webkit-box-shadow: inset 0px 5px 5px -5px #222222;
+       -moz-box-shadow: inset 0px 5px 5px -5px #222222;
+            box-shadow: inset 0px 5px 5px -5px #222222;
+  }
+  33% {
+    -webkit-box-shadow: inset 0px 10px 10px -7px #000000;
+       -moz-box-shadow: inset 0px 10px 10px -7px #000000;
+            box-shadow: inset 0px 10px 10px -7px #000000;
+  }
+  66% {
+    -webkit-box-shadow: inset 0px 30px 30px -25px #440000;
+       -moz-box-shadow: inset 0px 30px 30px -25px #440000;
+            box-shadow: inset 0px 30px 30px -25px #440000;
+  }
+  100% {
+    -webkit-box-shadow: inset 0px 5px 5px -5px #222222;
+       -moz-box-shadow: inset 0px 5px 5px -5px #222222;
+            box-shadow: inset 0px 5px 5px -5px #222222;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    -webkit-box-shadow: inset 0px 5px 5px -5px #222222;
+       -moz-box-shadow: inset 0px 5px 5px -5px #222222;
+            box-shadow: inset 0px 5px 5px -5px #222222;
+  }
+  33% {
+    -webkit-box-shadow: inset 0px 10px 10px -7px #000000;
+       -moz-box-shadow: inset 0px 10px 10px -7px #000000;
+            box-shadow: inset 0px 10px 10px -7px #000000;
+  }
+  66% {
+    -webkit-box-shadow: inset 0px 30px 30px -25px #440000;
+       -moz-box-shadow: inset 0px 30px 30px -25px #440000;
+            box-shadow: inset 0px 30px 30px -25px #440000;
+  }
+  100% {
+    -webkit-box-shadow: inset 0px 5px 5px -5px #222222;
+       -moz-box-shadow: inset 0px 5px 5px -5px #222222;
+            box-shadow: inset 0px 5px 5px -5px #222222;
+  }
+}
+
+body section.main.fixed-width header nav.account:hover {
+  background-color: #440000;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#330000), color-stop(30%, #440000), to(#440000));
+  background-image: -webkit-linear-gradient(#330000, #440000 30%, #440000);
+  background-image: -moz-linear-gradient(top, #330000, #440000 30%, #440000);
+  background-image: -o-linear-gradient(#330000, #440000 30%, #440000);
+  background-image: linear-gradient(#330000, #440000 30%, #440000);
+  background-repeat: no-repeat;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff330000', endColorstr='#ff440000', GradientType=0);
+}
+
+body section.main.fixed-width header nav.account:hover span nav.dropdown {
+  display: block;
 }
 
 body section.main.fixed-width > article,
@@ -7230,7 +7393,72 @@ body section.main.fixed-width > section {
   padding: 10px;
 }
 
-body section.main.fixed-width section.main a.button {
+body section.main.fixed-width section.main nav.admin {
+  position: relative;
+  top: -20px;
+  width: 750px;
+  padding: 3px;
+  font-size: 14px;
+  background: black;
+  background-color: #222222;
+  background-image: -moz-linear-gradient(top, #222222, #000000);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#222222), to(#000000));
+  background-image: -webkit-linear-gradient(top, #222222, #000000);
+  background-image: -o-linear-gradient(top, #222222, #000000);
+  background-image: linear-gradient(to bottom, #222222, #000000);
+  background-repeat: repeat-x;
+  -webkit-border-bottom-right-radius: 10px;
+          border-bottom-right-radius: 10px;
+  -webkit-border-bottom-left-radius: 10px;
+          border-bottom-left-radius: 10px;
+  -moz-border-radius-bottomright: 10px;
+  -moz-border-radius-bottomleft: 10px;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff222222', endColorstr='#ff000000', GradientType=0);
+}
+
+body section.main.fixed-width section.main nav.admin h4 {
+  float: left;
+  margin: 0;
+  margin-right: 15px;
+  font-family: killer;
+  font-weight: normal;
+}
+
+body section.main.fixed-width section.main nav.admin ul {
+  margin-bottom: 2px;
+  overflow: auto;
+  list-style-type: none;
+}
+
+body section.main.fixed-width section.main nav.admin ul li {
+  float: left;
+  margin-left: 10px;
+}
+
+body section.main.fixed-width section.main nav.admin ul li a {
+  padding: 2px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: #ccccab;
+  text-decoration: none;
+}
+
+body section.main.fixed-width section.main nav.admin ul li a:hover {
+  color: #453314;
+  background: #ccccab;
+  -webkit-border-radius: 3px;
+     -moz-border-radius: 3px;
+          border-radius: 3px;
+  -webkit-box-shadow: inset 0px 0px 15px #000000;
+     -moz-box-shadow: inset 0px 0px 15px #000000;
+          box-shadow: inset 0px 0px 15px #000000;
+}
+
+body section.main.fixed-width section.main nav.admin ul li:first-child {
+  margin-left: 0;
+}
+
+body section.main.fixed-width section.main .button {
   padding: 5px;
   color: #cccccc;
   background-color: #661111;
@@ -7250,7 +7478,7 @@ body section.main.fixed-width section.main a.button {
           box-shadow: inset 0px 0px 10px #772222;
 }
 
-body section.main.fixed-width section.main a.button:hover {
+body section.main.fixed-width section.main .button:hover {
   text-decoration: none;
   background-color: #661111;
   background-image: -moz-linear-gradient(top, #550000, #661111);
@@ -7260,6 +7488,59 @@ body section.main.fixed-width section.main a.button:hover {
   background-image: linear-gradient(to bottom, #550000, #661111);
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff550000', endColorstr='#ff661111', GradientType=0);
+}
+
+body section.main.fixed-width section.main section.members > section.rank {
+  padding-right: 5px;
+  padding-left: 5px;
+  margin-bottom: 3px;
+  overflow: hidden;
+  border-top: 1px solid #666666;
+  border-bottom: 1px solid #666666;
+  -webkit-border-radius: 15px;
+     -moz-border-radius: 15px;
+          border-radius: 15px;
+}
+
+body section.main.fixed-width section.main section.members > section.rank > section.rank.description {
+  border-bottom: 1px solid #444444;
+}
+
+body section.main.fixed-width section.main section.members > section.rank > section.rank.description > h4 {
+  font-size: 22px;
+}
+
+body section.main.fixed-width section.main section.members > section.rank > section.rank.description > p {
+  padding-left: 10px;
+}
+
+body section.main.fixed-width section.main section.members > section.rank article.member {
+  float: left;
+  padding: 3px;
+  margin: 5px;
+  border: 1px solid #444444;
+  -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+          border-radius: 5px;
+  -webkit-box-shadow: inset 0px 0px 10px #550000;
+     -moz-box-shadow: inset 0px 0px 10px #550000;
+          box-shadow: inset 0px 0px 10px #550000;
+}
+
+body section.main.fixed-width section.main section.members > section.rank article.member a {
+  font-style: none;
+  color: #cccccc;
+  text-decoration: none;
+}
+
+body section.main.fixed-width section.main section.members > section.rank article.member:hover {
+  background: #550000;
+}
+
+body section.main.fixed-width section.main section.members > section.rank article.member:hover a {
+  font-style: none;
+  color: #cccccc;
+  text-decoration: none;
 }
 
 body section.main.fixed-width article.home section.main h1 {
@@ -7302,6 +7583,7 @@ body section.main.fixed-width article.home section.main h4.scratchings {
 
 body section.main.fixed-width table.account {
   margin-right: 20px;
+  margin-bottom: 15px;
   margin-left: 20px;
 }
 
@@ -7322,18 +7604,37 @@ body section.main.fixed-width table.account tr:last-child > th {
 }
 
 body section.main.fixed-width table.account th {
+  width: 120px;
   padding-right: 5px;
-  font-family: times-gothic;
-  font-size: 16px;
   text-align: right;
   vertical-align: top;
   border-right: 1px solid #333333;
 }
 
 body section.main.fixed-width table.account td {
+  width: 780px;
   padding-left: 10px;
-  font-family: hog-runes;
-  font-size: 24px;
+}
+
+body section.main.fixed-width table.account tr.list > td {
+  padding: 0;
+}
+
+body section.main.fixed-width table.account tr.list > td ul {
+  margin: 0;
+  margin-bottom: 3px;
+}
+
+body section.main.fixed-width table.account tr.list > td ul li {
+  display: block;
+  padding: 3px;
+  padding-left: 10px;
+  overflow: auto;
+  border-bottom: 1px solid #333333;
+}
+
+body section.main.fixed-width table.account tr.list > td ul li .button {
+  margin-left: 10px;
 }
 
 body section.main.fixed-width section.account-details {
@@ -7380,6 +7681,200 @@ body section.main.fixed-width section.about h1 {
   text-align: center;
 }
 
+body section.main.fixed-width article.member.profile {
+  width: auto;
+  margin-right: auto;
+}
+
+body section.main.fixed-width article.member.profile h3,
+body section.main.fixed-width article.member.profile h4 {
+  text-shadow: 0.1em 0.1em black;
+}
+
+body section.main.fixed-width article.member.profile h3 {
+  margin-bottom: 0;
+}
+
+body section.main.fixed-width article.member.profile h4 {
+  margin-top: 0;
+  margin-left: 15px;
+}
+
+body section.main.fixed-width article.member.profile section {
+  padding: 10px;
+  padding-top: 10px;
+  margin-top: 20px;
+  border-top: 1px solid #888867;
+  border-bottom: 1px solid #888867;
+  -webkit-border-radius: 15px;
+     -moz-border-radius: 15px;
+          border-radius: 15px;
+}
+
+body section.main.fixed-width article.member.profile section section {
+  border-top: 1px solid #666645;
+  border-bottom: 1px solid #666645;
+}
+
+body section.main.fixed-width article.member.profile section > .title {
+  position: relative;
+  top: -20px;
+  left: 10px;
+}
+
+body section.main.fixed-width article.member.profile section > p {
+  margin-left: 5px;
+}
+
+body section.main.fixed-width aside.member.actions {
+  float: right;
+  max-width: 150px;
+  overflow: hidden;
+  border: 1px solid #550000;
+  -webkit-border-radius: 10px;
+     -moz-border-radius: 10px;
+          border-radius: 10px;
+}
+
+body section.main.fixed-width aside.member.actions a.button {
+  display: block;
+  width: 100%;
+  padding: 5px;
+  margin: 0;
+  border: none;
+  -webkit-border-radius: 0;
+     -moz-border-radius: 0;
+          border-radius: 0;
+}
+
+body section.main.fixed-width article.inbox,
+body section.main.fixed-width article.message {
+  position: relative;
+  min-height: 30px;
+  border: 1px solid #675536;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+}
+
+body section.main.fixed-width article.inbox .title,
+body section.main.fixed-width article.message .title {
+  position: absolute;
+  top: -30px;
+  left: 20px;
+}
+
+body section.main.fixed-width article.inbox a.message:nth-child(2),
+body section.main.fixed-width article.message a.message:nth-child(2) {
+  margin-top: 10px;
+}
+
+body section.main.fixed-width article.inbox a.message:last-child,
+body section.main.fixed-width article.message a.message:last-child {
+  border-bottom: none;
+}
+
+body section.main.fixed-width article.message {
+  border: none;
+}
+
+body section.main.fixed-width section.thread {
+  margin-bottom: 15px;
+}
+
+body section.main.fixed-width article.parentmessage a {
+  color: #cccccc;
+}
+
+body section.main.fixed-width article.parentmessage:first-child a {
+  -webkit-border-top-right-radius: 5px;
+          border-top-right-radius: 5px;
+  -webkit-border-top-left-radius: 5px;
+          border-top-left-radius: 5px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-topleft: 5px;
+}
+
+body section.main.fixed-width article.parentmessage:last-child a {
+  -webkit-border-bottom-right-radius: 5px;
+          border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+          border-bottom-left-radius: 5px;
+  -moz-border-radius-bottomright: 5px;
+  -moz-border-radius-bottomleft: 5px;
+}
+
+body section.main.fixed-width a.message {
+  display: block;
+  padding: 2px;
+  padding-left: 4px;
+  overflow: hidden;
+  color: #cccccc;
+  background-color: #363636;
+  background-image: -moz-linear-gradient(top, #444444, #222222);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#444444), to(#222222));
+  background-image: -webkit-linear-gradient(top, #444444, #222222);
+  background-image: -o-linear-gradient(top, #444444, #222222);
+  background-image: linear-gradient(to bottom, #444444, #222222);
+  background-repeat: repeat-x;
+  border-bottom: 1px solid #675536;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff444444', endColorstr='#ff222222', GradientType=0);
+}
+
+body section.main.fixed-width a.message input {
+  display: block;
+  float: left;
+  vertical-align: top;
+}
+
+body section.main.fixed-width a.message span.from {
+  display: block;
+  float: left;
+  width: 120px;
+  overflow: hidden;
+  font-size: 0.8em;
+  font-weight: bold;
+  color: #ccccab;
+}
+
+body section.main.fixed-width a.message span.subject {
+  display: block;
+  float: left;
+  max-width: 300px;
+  padding-right: 6px;
+  margin-top: 2px;
+  margin-left: 20px;
+  overflow: hidden;
+  font-size: 1.0;
+  font-weight: bold;
+}
+
+body section.main.fixed-width a.message span.summary {
+  display: block;
+  max-height: 1em;
+  margin-top: 4px;
+  margin-left: 8px;
+  overflow: hidden;
+  font-size: 0.8em;
+  line-height: 1em;
+}
+
+body section.main.fixed-width a.message.unread {
+  background-color: #483617;
+  background-image: -moz-linear-gradient(top, #564425, #342203);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#564425), to(#342203));
+  background-image: -webkit-linear-gradient(top, #564425, #342203);
+  background-image: -o-linear-gradient(top, #564425, #342203);
+  background-image: linear-gradient(to bottom, #564425, #342203);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff564425', endColorstr='#ff342203', GradientType=0);
+}
+
+body section.main.fixed-width a.message:hover {
+  text-decoration: none;
+  background: #550000;
+}
+
 body section.main.fixed-width footer {
   height: 50px;
   background-color: #661111;
@@ -7390,4 +7885,9 @@ body section.main.fixed-width footer {
   background-image: linear-gradient(#111111, #661111 15%, #550000);
   background-repeat: no-repeat;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff111111', endColorstr='#ff550000', GradientType=0);
+}
+
+html.ie body .error {
+  color: red;
+  background: black;
 }

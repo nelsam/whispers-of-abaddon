@@ -23,6 +23,7 @@ class Scribes(BaseHandler):
     def query(self):
         from models.scribes import OrderedRecord as Record
         query = Record.query(Record.section == self.scribetype)
+        query = query.order(Record.rank)
         records = query
 
         return records

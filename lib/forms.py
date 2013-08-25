@@ -146,6 +146,13 @@ class Record(Base):
     body = forms.CharField(label="Body: ", widget=forms.Textarea())
 
 
+class OrderedRecord(Record):
+    """
+    Handles any records that have a rank.
+    """
+    rank = forms.IntegerField(label="Order Rank")
+
+
 class Rank(Record):
     """
     This form handles rank data for the guild.  It's mainly just
@@ -236,3 +243,12 @@ class Reply(Base):
     Form to reply to another user.
     """
     message = forms.CharField(label="Message: ", widget=forms.Textarea())
+
+
+class Forum(Record):
+    """
+    Form to create a forum
+    """
+    viewlevel = forms.IntegerField(label="View Level: ")
+    replylevel = forms.IntegerField(label="Reply Level: ")
+    newthreadlevel = forms.IntegerField(label="New Thread Level: ")
