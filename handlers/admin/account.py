@@ -29,6 +29,10 @@ class RankBase(base.AdminHandler):
 class RankList(RankBase, base.List):
     title = 'Rank'
 
+    @property
+    def query(self):
+        return self.model.query().order(self.model.placement)
+
 
 class RankCreate(RankBase, base.Create):
 
