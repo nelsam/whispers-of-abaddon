@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from webapp2 import Route
+
 from models.communication import Forum
 from handlers.admin import base
 
@@ -53,3 +55,11 @@ class ForumEdit(ForumBase, base.Edit):
 
 class ForumDelete(ForumBase, base.Delete):
     pass
+
+
+routes = [
+    Route(r'/', ForumList, name='admin-forum-list'),
+    Route(r'/create', ForumCreate, name='admin-forum-create'),
+    Route(r'/edit', ForumEdit, name='admin-forum-edit'),
+    Route(r'/delete', ForumDelete, name='admin-forum-delete'),
+]
